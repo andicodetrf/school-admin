@@ -36,32 +36,52 @@ var updateData = /*#__PURE__*/function () {
             editSubject = req.body.subject;
             editClass = req.body["class"];
 
-            checkPersonForm = function checkPersonForm(obj) {
-              if (!obj.email || !obj.updateName || !obj.updateEmail) {
+            checkPersonForm = function checkPersonForm(person) {
+              if (!person.email || !person.updateName || !person.updateEmail) {
                 return res.status(400).json({
-                  message: 'Error 400: Kindly complete the update with existing email(email: "jd@gmail.com"), new name(updateName: "John") and new email(updateEmail: "john@gmail.com") '
+                  message: "Error 400: Kindly complete the update with existing email(email: 'jd@gmail.com'), new name(updateName: 'John') and new email(updateEmail: 'john@gmail.com') "
                 });
               }
+
+              if (person.updateName === person.updateEmail) {
+                return res.status(400).json({
+                  message: "Email and Name to be updated must be unique from one another"
+                });
+              }
+
+              return 'toUpdate';
             };
 
-            checkSubjectForm = function checkSubjectForm(obj) {
-              if (!obj.subjectCode || !obj.updateName || !obj.updateSubjectCode) {
+            checkSubjectForm = function checkSubjectForm(sub) {
+              if (!sub.subjectCode || !sub.updateName || !sub.updateSubjectCode) {
                 return res.status(400).json({
                   message: 'Error 400: Kindly complete the update with existing subject code (subjectCode: "ENG"), new subject name(updateName: "English2") and new subject code(updateSubjectCode: "ENG2").'
                 });
               }
+
+              if (sub.updateName === sub.updateSubjectCode) {
+                return res.status(400).json({
+                  message: 'Name and Code to be updated must be unique from one another'
+                });
+              }
             };
 
-            checkClassForm = function checkClassForm(obj) {
-              if (!obj.classCode || !obj.updateName || !obj.updateClassCode) {
+            checkClassForm = function checkClassForm(cls) {
+              if (!cls.classCode || !cls.updateName || !cls.updateClassCode) {
                 return res.status(400).json({
                   message: 'Error 400: Kindly complete the update with existing class code (classCode: "P1-I"), new class name(updateName: "P1-Unity") and new class code(updateSubjectCode: "P1-U").'
+                });
+              }
+
+              if (cls.updateName === cls.updateClassCode) {
+                return res.status(400).json({
+                  message: 'Name and Code to be updated must be unique from one another'
                 });
               }
             };
 
             if (!(Object.keys(req.body).length !== 1)) {
-              _context4.next = 11;
+              _context4.next = 9;
               break;
             }
 
@@ -69,24 +89,7 @@ var updateData = /*#__PURE__*/function () {
               message: 'Error 400: Kindly update only Teacher, Student, Subject or Class information at one time'
             }));
 
-          case 11:
-            if (req.body.teacher) {
-              checkPersonForm(req.body.teacher);
-            }
-
-            if (req.body.student) {
-              checkPersonForm(req.body.student);
-            }
-
-            if (req.body.subject) {
-              checkSubjectForm(req.body.subject);
-            }
-
-            if (req.body["class"]) {
-              checkClassForm(req.body["class"]);
-            }
-
-          case 15:
+          case 9:
             updatePersonData = /*#__PURE__*/function () {
               var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(person, model) {
                 var updatePersonDetails;
@@ -109,21 +112,20 @@ var updateData = /*#__PURE__*/function () {
                         console.log('UP_PERSON_DETAILS', updatePersonDetails);
 
                         if (!updatePersonDetails[0]) {
-                          _context.next = 9;
+                          _context.next = 8;
                           break;
                         }
 
-                        console.log('TESTTT');
                         return _context.abrupt("return", res.status(200).json({
                           message: '200: Person details updated'
                         }));
 
-                      case 9:
+                      case 8:
                         return _context.abrupt("return", res.status(400).json({
                           message: 'Error 400: Email not found. Kindly register'
                         }));
 
-                      case 10:
+                      case 9:
                       case "end":
                         return _context.stop();
                     }
@@ -163,7 +165,7 @@ var updateData = /*#__PURE__*/function () {
                         }
 
                         return _context2.abrupt("return", res.status(200).json({
-                          message: '200: Subject Details updated'
+                          message: '200: Subject details updated'
                         }));
 
                       case 8:
@@ -211,7 +213,7 @@ var updateData = /*#__PURE__*/function () {
                         }
 
                         return _context3.abrupt("return", res.status(200).json({
-                          message: '200: Class Details updated'
+                          message: '200: Class details updated'
                         }));
 
                       case 8:
@@ -233,7 +235,7 @@ var updateData = /*#__PURE__*/function () {
             }();
 
             try {
-              if (editTeacher) {
+              if (editTeacher && checkPersonForm(editTeacher) === 'toUpdate') {
                 (0, _index.lowerCaseNameEmail)(editTeacher);
                 updatePersonData(editTeacher, Teacher);
               }
@@ -256,7 +258,7 @@ var updateData = /*#__PURE__*/function () {
               (0, _index.errHandler)(err);
             }
 
-          case 19:
+          case 13:
           case "end":
             return _context4.stop();
         }

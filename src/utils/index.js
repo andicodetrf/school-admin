@@ -14,7 +14,7 @@ export const convertCsvToJson = (filePath) => {
 
 //errHandler
 export const errHandler = (err) => {
-  console.error('ERROR ---> : ', err);
+  console.error('ERROR ---> : ', err)
 }
 
 

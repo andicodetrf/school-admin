@@ -51,37 +51,37 @@ var registerData = /*#__PURE__*/function () {
             break;
 
           case 7:
-            return _context.abrupt("return", res.status(400).send({
+            return _context.abrupt("return", res.status(400).json({
               message: "Error 400: Teacher's name input not found"
             }));
 
           case 8:
-            return _context.abrupt("return", res.status(400).send({
+            return _context.abrupt("return", res.status(400).json({
               message: "Error 400: Teacher's email input not found"
             }));
 
           case 9:
-            return _context.abrupt("return", res.status(400).send({
+            return _context.abrupt("return", res.status(400).json({
               message: "Error 400: Student's details not found"
             }));
 
           case 10:
-            return _context.abrupt("return", res.status(400).send({
+            return _context.abrupt("return", res.status(400).json({
               message: "Error 400: Subject Code not found"
             }));
 
           case 11:
-            return _context.abrupt("return", res.status(400).send({
+            return _context.abrupt("return", res.status(400).json({
               message: "Error 400: Subject Name not found"
             }));
 
           case 12:
-            return _context.abrupt("return", res.status(400).send({
+            return _context.abrupt("return", res.status(400).json({
               message: "Error 400: Class Code not found"
             }));
 
           case 13:
-            return _context.abrupt("return", res.status(400).send({
+            return _context.abrupt("return", res.status(400).json({
               message: "Error 400: Class Name not found"
             }));
 
@@ -105,7 +105,7 @@ var registerData = /*#__PURE__*/function () {
               break;
             }
 
-            return _context.abrupt("return", res.status(400).send({
+            return _context.abrupt("return", res.status(400).json({
               message: "Error 400: Student's name not found"
             }));
 
@@ -115,7 +115,7 @@ var registerData = /*#__PURE__*/function () {
               break;
             }
 
-            return _context.abrupt("return", res.status(400).send({
+            return _context.abrupt("return", res.status(400).json({
               message: "Error 400: Student's email not found"
             }));
 
@@ -166,11 +166,10 @@ var registerData = /*#__PURE__*/function () {
             _context.next = 43;
             return Teacher.findOrCreate({
               where: {
-                email: teacherData.email
-              },
-              defaults: {
+                email: teacherData.email,
                 name: teacherData.name
-              } //finds the teacher by email (nonchangeable). if not found, create email and name data.
+              } // defaults: { name: teacherData.name }
+              //finds the teacher by email (nonchangeable). if not found, create email and name data.
 
             });
 
@@ -246,21 +245,35 @@ var registerData = /*#__PURE__*/function () {
 
           case 67:
             insertTeacherSubClass = _context.sent;
-            return _context.abrupt("return", res.status(200).send({
-              message: '200: Success'
+
+            if (insertTeacherSubClass[0].isNewRecord) {
+              _context.next = 70;
+              break;
+            }
+
+            return _context.abrupt("return", res.status(200).json({
+              message: 'Record has already been created'
             }));
 
-          case 71:
-            _context.prev = 71;
+          case 70:
+            return _context.abrupt("return", res.status(201).json({
+              message: 'Status 201: Created'
+            }));
+
+          case 73:
+            _context.prev = 73;
             _context.t2 = _context["catch"](40);
             (0, _index.errHandler)(_context.t2);
+            return _context.abrupt("return", res.status(400).json({
+              message: 'Error 400: Fields must be unique'
+            }));
 
-          case 74:
+          case 77:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[15, 27, 30, 33], [40, 71]]);
+    }, _callee, null, [[15, 27, 30, 33], [40, 73]]);
   }));
 
   return function registerData(_x, _x2) {

@@ -19,13 +19,10 @@ var _UpdateRecord = _interopRequireDefault(require("./controllers/UpdateRecord")
 
 var _WorkloadDummy = _interopRequireDefault(require("./controllers/WorkloadDummy"));
 
-// import Workload from './controllers/Workload';
+// import generateReport from './controllers/Workload';
 var router = _express["default"].Router();
 
-router.use('/', _HealthcheckController["default"], _WorkloadDummy["default"]); // router.use('/', Register);
-// router.use('/', UpdateRecord);
-
-router.get('/reports/workload', _Workload["default"]); // router.use('/', Register);
+router.use('/', _HealthcheckController["default"], _Register["default"], _UpdateRecord["default"], _Workload["default"], _WorkloadDummy["default"]); // router.get('/reports/workload', generateReport)
 
 var _default = router;
 exports["default"] = _default;

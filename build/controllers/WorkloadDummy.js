@@ -17,13 +17,12 @@ var _index = require("../utils/index");
 
 var db = require('../config/db.config');
 
-var Teacher = db.teacher; // const Student = db.student;
-
+var Teacher = db.teacher;
 var Subject = db.subject;
-var TClass = db.tclass; // const Teacher_Student = db.teacher_student;
-// const Teacher_Sub_Class = db.teacher_sub_class;
+var TClass = db.tclass;
 
-var WorkloadDum = _express["default"].Router();
+var WorkloadDum = _express["default"].Router(); //FOR TESTING. TO DELETE
+
 
 var generateReportDum = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
@@ -36,26 +35,26 @@ var generateReportDum = /*#__PURE__*/function () {
             return Teacher.findAll({
               // where: { id: 2 },
               include: [{
-                model: TClass,
-                as: 'tclass',
+                model: Subject,
+                as: 'subject',
+                // model: TClass,
+                // as: 'tclass',
                 // through: {where: {teacherId: i}},
                 // where: {subjectCode: 'ENG'},
                 // through:{where: {tclassId: 1}},
                 include: [{
-                  model: Subject,
-                  as: 'subject',
-                  through: {
-                    where: {
-                      teacherId: 2
-                    }
-                  }
+                  model: TClass,
+                  as: 'tclass' // model: Subject,
+                  // as: 'subject',
+                  //   through:{where: {teacherId: 2}},
+
                 }]
               }]
             });
 
           case 2:
             teachersSubsClass = _context.sent;
-            return _context.abrupt("return", res.status(200).json(teachersSubsClass));
+            console.log('>>>>', JSON.stringify(teachersSubsClass, null, 3));
 
           case 4:
           case "end":

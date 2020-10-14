@@ -26,60 +26,10 @@ const healthcheckHandler = async (req, res) => {
   } catch (err){
     errHandler(err)
   }
-
 }
 
 
-// const healthCheckAdd = async (req, res) => {
-//   try{
-    // //CREATE DATA
-    // const addTeacher = {
-    //   name: 'TeacherOne',
-    //   email: 'T_ONEgmail.com'
-    // }
-    // // const addStudentOne = {
-    // //   name: 'StudentOne',
-    // //   email: 'St_One@gmail.com'
-    // // }
-
-    // // const addStudentTwo = {
-    // //   name: 'StudentTwo',
-    // //   email: 'St_Two@gmail.com'
-    // // }
-
-
-    // let { name, email } = addTeacher;
-
-
-    // //INSERT INTO TABLE. gonna return a promise
-    // await Teacher.create({
-    //   name,
-    //   email
-    // })
-
-    // await Student.bulkCreate([addStudentOne, addStudentTwo ])
-
-    // await Subject.create({
-    //   subjectName: 'English',
-    //   subjectCode: 'ENG'
-    // })
-
-    // await TClass.create({
-    //   className: 'P1-Integrity',
-    //   classCode: 'P1-I'
-    // })
-
-    // res.redirect('/api/healthcheck')
-
-
-//   } catch(err){
-//     errHandler(err)
-//     res.sendStatus(400)
-//   }
-// }
-
-
 HealthcheckController.get('/healthcheck', healthcheckHandler);
-// HealthcheckController.get('/healthcheck/add', healthCheckAdd);
+
 
 export default HealthcheckController;

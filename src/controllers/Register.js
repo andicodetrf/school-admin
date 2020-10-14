@@ -21,37 +21,38 @@ const registerData = async (req, res) => {
 // ------- INPUT/REQ BODY VALIDATION --------
   switch(true) {
   case !teacherData.name:
-    return res.status(400).send({message: `Error 400: Teacher's name input not found`})
+    return res.status(400).json({message: `Error 400: Teacher's name input not found`})
 
   case !teacherData.email:
-    return res.status(400).send({message: `Error 400: Teacher's email input not found`})
+    return res.status(400).json({message: `Error 400: Teacher's email input not found`})
 
   case !studentsData: //for completely missing 'students:'
   case !studentsData.length: //for students = []
   case !Object.keys(studentsData).length: //for students = {}
-    return res.status(400).send({message: `Error 400: Student's details not found`})
+    return res.status(400).json({message: `Error 400: Student's details not found`})
 
   case !subjectData.subjectCode:
-    return res.status(400).send({message: `Error 400: Subject Code not found`})
+    return res.status(400).json({message: `Error 400: Subject Code not found`})
 
   case !subjectData.name:
-    return res.status(400).send({message: `Error 400: Subject Name not found`})
+    return res.status(400).json({message: `Error 400: Subject Name not found`})
 
   case !classData.classCode:
-    return res.status(400).send({message: `Error 400: Class Code not found`})
+    return res.status(400).json({message: `Error 400: Class Code not found`})
 
   case !classData.name:
-    return res.status(400).send({message: `Error 400: Class Name not found`})
+    return res.status(400).json({message: `Error 400: Class Name not found`})
 
   }
+
 
   //Check if there is name' and 'email' in student object within students array
   for(let i of studentsData){
     if(!i.name){
-      return res.status(400).send({message: `Error 400: Student's name not found`})
+      return res.status(400).json({message: `Error 400: Student's name not found`})
     }
     if(!i.email){
-      return res.status(400).send({message: `Error 400: Student's email not found`})
+      return res.status(400).json({message: `Error 400: Student's email not found`})
     }
   }
 
@@ -75,8 +76,9 @@ const registerData = async (req, res) => {
     let insertTeacherData = await Teacher.findOrCreate({
       where:{
         email: teacherData.email,
+        name: teacherData.name
       },
-      defaults: { name: teacherData.name }
+      // defaults: { name: teacherData.name }
       //finds the teacher by email (nonchangeable). if not found, create email and name data.
     })
 
@@ -127,10 +129,18 @@ const registerData = async (req, res) => {
       }
     })
 
-    return res.status(200).send({message: '200: Success'})
+
+    if(!insertTeacherSubClass[0].isNewRecord){
+      return res.status(200).json({message: 'Record has already been created'})
+    }
+
+
+    return res.status(201).json({message: 'Status 201: Created'})
 
   } catch(err){
     errHandler(err)
+    return res.status(400).json({message: 'Error 400: Fields must be unique'})
+
   }
 
 }
