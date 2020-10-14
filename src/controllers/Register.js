@@ -147,7 +147,7 @@ const registerData = async (req, res) => {
   // ------- ACCESSING DB FOR DATA CREATION OR LOOKUP --------
   try{
 
-    let insertTeacherData = await Teacher.findOrCreate({
+    const insertTeacherData = await Teacher.findOrCreate({
       where:{
         email: teacherData.email,
       },
@@ -156,19 +156,19 @@ const registerData = async (req, res) => {
     })
 
 
-    let teacherID = insertTeacherData[0].dataValues.id
+    const teacherID = insertTeacherData[0].dataValues.id
 
     for(let i = 0; i < studentsEmail.length; i++){
-      let insertStudentsData = await Student.findOrCreate({
+      const insertStudentsData = await Student.findOrCreate({
         where:{
           email: studentsEmail[i],
         },
         defaults: { name: studentsName[i] }
       })
 
-      let studentID = insertStudentsData[0].dataValues.id
+      const studentID = insertStudentsData[0].dataValues.id
 
-      let insertTeacherStudents = await Teacher_Student.findOrCreate({
+      const insertTeacherStudents = await Teacher_Student.findOrCreate({
         where:{
           teacherId: teacherID,
           studentId: studentID
@@ -177,7 +177,7 @@ const registerData = async (req, res) => {
 
     }
 
-    let insertSubjectData = await Subject.findOrCreate({
+    const insertSubjectData = await Subject.findOrCreate({
       where:{
         subjectCode: subjectData.subjectCode,
       },
@@ -185,17 +185,17 @@ const registerData = async (req, res) => {
     })
 
 
-    let insertClassData = await TClass.findOrCreate({
+    const insertClassData = await TClass.findOrCreate({
       where:{
         classCode: classData.classCode,
       },
       defaults: { name: classData.name }
     })
 
-    let subjectID = insertSubjectData[0].dataValues.id
-    let classID = insertClassData[0].dataValues.id
+    const subjectID = insertSubjectData[0].dataValues.id
+    const classID = insertClassData[0].dataValues.id
 
-    let insertTeacherSubClass = await Teacher_Sub_Class.findOrCreate({
+    const insertTeacherSubClass = await Teacher_Sub_Class.findOrCreate({
       where:{
         teacherId: teacherID,
         subjectId: subjectID,

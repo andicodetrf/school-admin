@@ -4,7 +4,7 @@ const Teacher = db.teacher;
 const Student = db.student;
 const Subject = db.subject;
 const TClass = db.tclass;
-import {lowerCaseNameEmail, formatSubjectCode, formatClassCode, errHandler, validateEmailField, validateStringField} from '../utils/index'
+import {lowerCaseNameEmail, formatSubjectCode, formatClassCode, errHandler, validateEmailField, validateStringField } from '../utils/index'
 import { BAD_REQUEST, OK, NOT_FOUND } from 'http-status-codes';
 
 const UpdateRecord = Express.Router();
@@ -88,13 +88,13 @@ const updateData = async (req, res) => {
 
 //---- UPDATE DATA FUNCTIONS
   const updatePersonData = async (person, model) => {
-    let updatePersonDetails = await model.update(
+    const updatePersonDetails = await model.update(
       { name: person.updateName,
         email: person.updateEmail },
       { where: {email: person.email}}
     )
 
-    console.log('UP_PERSON_DETAILS', updatePersonDetails)
+    // console.log('UP_PERSON_DETAILS', updatePersonDetails)
 
     if(updatePersonDetails[0]){
       return res.status(OK).json({
@@ -110,13 +110,13 @@ const updateData = async (req, res) => {
   }
 
   const updateSubjectData = async (sub) => {
-    let updateSubjectDetails = await Subject.update(
+    const updateSubjectDetails = await Subject.update(
       { name: sub.updateName,
         subjectCode: sub.updateSubjectCode },
       { where: {subjectCode: sub.subjectCode}}
     )
 
-    console.log('UP_SUB_DETAILS', updateSubjectDetails)
+    // console.log('UP_SUB_DETAILS', updateSubjectDetails)
 
     if(updateSubjectDetails[0]){
       return res.status(OK).json({
@@ -132,13 +132,13 @@ const updateData = async (req, res) => {
   }
 
   const updateClassData = async (cls) => {
-    let updateClassDetails = await TClass.update(
+    const updateClassDetails = await TClass.update(
       { name: cls.updateName,
         classCode: cls.updateClassCode },
       { where: {classCode: cls.classCode}}
     )
 
-    console.log('UP_CLASS_DETAILS', updateClassDetails)
+    // console.log('UP_CLASS_DETAILS', updateClassDetails)
 
     if(updateClassDetails[0]){
       return res.status(OK).json({

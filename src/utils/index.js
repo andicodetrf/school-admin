@@ -19,20 +19,20 @@ export const errHandler = (err) => {
 
 //validate alphabets-only for name input
 export const validateStringField = (str) => {
-  let reg = /^[a-zA-Z]+$/
+  const reg = /^[a-zA-Z]+$/
   return str.match(reg)
 }
 
 //validate email format for email input
 export const validateEmailField = (eml) => {
-  let reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+  const reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
   return reg.test(eml)
 }
 
 
 //unique code & names
 export const validateUniqueCodeName = (obj) => {
-  let arr = Object.values(obj).map(item => item.toLowerCase())
+  const arr = Object.values(obj).map(item => item.toLowerCase())
   for(let i = 0; i < arr.length; i++){
     if(arr.indexOf(arr[i]) !== i){
       return false
