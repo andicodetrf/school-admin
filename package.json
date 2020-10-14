@@ -1,0 +1,38 @@
+{
+  "name": "school-administration-system",
+  "version": "1.0.0",
+  "description": "This is a system which School administrators and Teachers can perform administrative functions on their students",
+  "scripts": {
+    "test": "jest",
+    "build": "babel src --out-dir build",
+    "prestart": "npm run start:services && npm run build",
+    "start": "node ./build/server.js",
+    "prestart:dev": "npm run start:services ",
+    "start:dev": "nodemon --exec babel-node src/server.js",
+    "start:services": "docker-compose up -d",
+    "lint": "eslint \"src/**/*.js\""
+  },
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "csv-parser": "^2.3.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "http-status-codes": "^1.4.0",
+    "mysql2": "^2.1.0",
+    "sequelize": "^6.3.3",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/node": "^7.10.5",
+    "@babel/plugin-transform-runtime": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "eslint": "^7.4.0",
+    "jest": "^26.1.0",
+    "nodemon": "^2.0.4"
+  }
+}
