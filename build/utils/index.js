@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.formatClassCode = exports.formatSubjectCode = exports.lowerCaseNameEmail = exports.capitalizeFirstChar = exports.validateEmailField = exports.validateStringField = exports.errHandler = exports.convertCsvToJson = void 0;
+exports.formatClassCode = exports.formatSubjectCode = exports.lowerCaseNameEmail = exports.capitalizeFirstChar = exports.validateUniqueCodeName = exports.validateEmailField = exports.validateStringField = exports.errHandler = exports.convertCsvToJson = void 0;
 
 var _fs = _interopRequireDefault(require("fs"));
 
@@ -34,24 +34,43 @@ exports.convertCsvToJson = convertCsvToJson;
 
 var errHandler = function errHandler(err) {
   console.error('ERROR ---> : ', err);
-};
+}; //validate alphabets-only for name input
+
 
 exports.errHandler = errHandler;
 
 var validateStringField = function validateStringField(str) {
   var reg = /^[a-zA-Z]+$/;
   return str.match(reg);
-};
+}; //validate email format for email input
+
 
 exports.validateStringField = validateStringField;
 
 var validateEmailField = function validateEmailField(eml) {
   var reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
   return reg.test(eml);
-}; //capitalize first character
+}; //unique code & names
 
 
 exports.validateEmailField = validateEmailField;
+
+var validateUniqueCodeName = function validateUniqueCodeName(obj) {
+  var arr = Object.values(obj).map(function (item) {
+    return item.toLowerCase();
+  });
+
+  for (var i = 0; i < arr.length; i++) {
+    if (arr.indexOf(arr[i]) !== i) {
+      return false;
+    }
+  }
+
+  return true;
+}; //capitalize first character
+
+
+exports.validateUniqueCodeName = validateUniqueCodeName;
 
 var capitalizeFirstChar = function capitalizeFirstChar(item) {
   return item.charAt(0).toUpperCase() + item.slice(1).toLowerCase();

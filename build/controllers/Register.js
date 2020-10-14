@@ -192,6 +192,28 @@ var registerData = /*#__PURE__*/function () {
             return _context.finish(35);
 
           case 38:
+            if ((0, _index.validateUniqueCodeName)(subjectData)) {
+              _context.next = 40;
+              break;
+            }
+
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Subject Name and Subject Code cannot be the same"
+            }));
+
+          case 40:
+            if ((0, _index.validateUniqueCodeName)(classData)) {
+              _context.next = 42;
+              break;
+            }
+
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Class Name and Class Code cannot be the same"
+            }));
+
+          case 42:
             // ------- DATA CLEANING --------
             //lowercase names and emails for teacher & students
             (0, _index.lowerCaseNameEmail)(teacherData);
@@ -215,40 +237,43 @@ var registerData = /*#__PURE__*/function () {
             (0, _index.formatSubjectCode)(subjectData);
             (0, _index.formatClassCode)(classData); // ------- ACCESSING DB FOR DATA CREATION OR LOOKUP --------
 
-            _context.prev = 45;
-            _context.next = 48;
+            _context.prev = 49;
+            _context.next = 52;
             return Teacher.findOrCreate({
               where: {
-                email: teacherData.email,
+                email: teacherData.email
+              },
+              defaults: {
                 name: teacherData.name
-              } // defaults: { name: teacherData.name }
-              //finds the teacher by email (nonchangeable). if not found, create email and name data.
+              } //finds the teacher by email (nonchangeable). if not found, create email and name from defaults data.
 
             });
 
-          case 48:
+          case 52:
             insertTeacherData = _context.sent;
             teacherID = insertTeacherData[0].dataValues.id;
             i = 0;
 
-          case 51:
+          case 55:
             if (!(i < studentsEmail.length)) {
-              _context.next = 62;
+              _context.next = 66;
               break;
             }
 
-            _context.next = 54;
+            _context.next = 58;
             return Student.findOrCreate({
               where: {
-                email: studentsEmail[i],
+                email: studentsEmail[i]
+              },
+              defaults: {
                 name: studentsName[i]
               }
             });
 
-          case 54:
+          case 58:
             insertStudentsData = _context.sent;
             studentID = insertStudentsData[0].dataValues.id;
-            _context.next = 58;
+            _context.next = 62;
             return Teacher_Student.findOrCreate({
               where: {
                 teacherId: teacherID,
@@ -256,38 +281,42 @@ var registerData = /*#__PURE__*/function () {
               }
             });
 
-          case 58:
+          case 62:
             insertTeacherStudents = _context.sent;
 
-          case 59:
+          case 63:
             i++;
-            _context.next = 51;
+            _context.next = 55;
             break;
 
-          case 62:
-            _context.next = 64;
+          case 66:
+            _context.next = 68;
             return Subject.findOrCreate({
               where: {
-                subjectCode: subjectData.subjectCode,
+                subjectCode: subjectData.subjectCode
+              },
+              defaults: {
                 name: subjectData.name
               }
             });
 
-          case 64:
+          case 68:
             insertSubjectData = _context.sent;
-            _context.next = 67;
+            _context.next = 71;
             return TClass.findOrCreate({
               where: {
-                classCode: classData.classCode,
+                classCode: classData.classCode
+              },
+              defaults: {
                 name: classData.name
               }
             });
 
-          case 67:
+          case 71:
             insertClassData = _context.sent;
             subjectID = insertSubjectData[0].dataValues.id;
             classID = insertClassData[0].dataValues.id;
-            _context.next = 72;
+            _context.next = 76;
             return Teacher_Sub_Class.findOrCreate({
               where: {
                 teacherId: teacherID,
@@ -296,40 +325,36 @@ var registerData = /*#__PURE__*/function () {
               }
             });
 
-          case 72:
+          case 76:
             insertTeacherSubClass = _context.sent;
 
-            if (insertTeacherSubClass[0].isNewRecord) {
-              _context.next = 75;
+            if (insertTeacherSubClass[0]._options.isNewRecord) {
+              _context.next = 79;
               break;
             }
 
             return _context.abrupt("return", res.status(_httpStatusCodes.OK).json({
               status: _httpStatusCodes.OK,
-              message: 'Record has already been created'
+              message: 'Record is already in the system'
             }));
 
-          case 75:
+          case 79:
             return _context.abrupt("return", res.status(_httpStatusCodes.CREATED).json({
               status: _httpStatusCodes.CREATED,
-              message: 'Status 201: Created'
-            }));
-
-          case 78:
-            _context.prev = 78;
-            _context.t2 = _context["catch"](45);
-            (0, _index.errHandler)(_context.t2);
-            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
-              status: _httpStatusCodes.BAD_REQUEST,
-              message: 'Fields must be unique'
+              message: 'Created'
             }));
 
           case 82:
+            _context.prev = 82;
+            _context.t2 = _context["catch"](49);
+            (0, _index.errHandler)(_context.t2);
+
+          case 85:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[16, 32, 35, 38], [45, 78]]);
+    }, _callee, null, [[16, 32, 35, 38], [49, 82]]);
   }));
 
   return function registerData(_x, _x2) {

@@ -30,7 +30,7 @@ App.use(_bodyParser["default"].urlencoded({
 }));
 App.use('/api', _router["default"]);
 App.use('*', function (req, res) {
-  res.status(404).json({
+  res.status(_httpStatusCodes.NOT_FOUND).json({
     status: _httpStatusCodes.NOT_FOUND,
     message: 'Not Found'
   });

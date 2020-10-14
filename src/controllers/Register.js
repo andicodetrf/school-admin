@@ -6,7 +6,7 @@ const Subject = db.subject;
 const TClass = db.tclass;
 const Teacher_Student = db.teacher_student;
 const Teacher_Sub_Class = db.teacher_sub_class;
-import {formatClassCode, formatSubjectCode, lowerCaseNameEmail, errHandler, validateEmailField, validateStringField} from '../utils/index'
+import {formatClassCode, formatSubjectCode, lowerCaseNameEmail, errHandler, validateEmailField, validateStringField, validateUniqueCodeName} from '../utils/index'
 import { BAD_REQUEST, OK, CREATED } from 'http-status-codes';
 
 const Register = Express.Router();
@@ -112,6 +112,21 @@ const registerData = async (req, res) => {
     }
   }
 
+  //validate subject/class code to be unique from subject/class name
+  if(!validateUniqueCodeName(subjectData)){
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Subject Name and Subject Code cannot be the same`
+    })
+  }
+
+  if(!validateUniqueCodeName(classData)){
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Class Name and Class Code cannot be the same`
+    })
+  }
+
 
   // ------- DATA CLEANING --------
 
@@ -135,10 +150,9 @@ const registerData = async (req, res) => {
     let insertTeacherData = await Teacher.findOrCreate({
       where:{
         email: teacherData.email,
-        name: teacherData.name
       },
-      // defaults: { name: teacherData.name }
-      //finds the teacher by email (nonchangeable). if not found, create email and name data.
+      defaults: { name: teacherData.name }
+      //finds the teacher by email (nonchangeable). if not found, create email and name from defaults data.
     })
 
 
@@ -148,8 +162,8 @@ const registerData = async (req, res) => {
       let insertStudentsData = await Student.findOrCreate({
         where:{
           email: studentsEmail[i],
-          name: studentsName[i]
-        }
+        },
+        defaults: { name: studentsName[i] }
       })
 
       let studentID = insertStudentsData[0].dataValues.id
@@ -166,15 +180,16 @@ const registerData = async (req, res) => {
     let insertSubjectData = await Subject.findOrCreate({
       where:{
         subjectCode: subjectData.subjectCode,
-        name: subjectData.name
-      }
+      },
+      defaults: { name: subjectData.name }
     })
+
 
     let insertClassData = await TClass.findOrCreate({
       where:{
         classCode: classData.classCode,
-        name: classData.name
-      }
+      },
+      defaults: { name: classData.name }
     })
 
     let subjectID = insertSubjectData[0].dataValues.id
@@ -189,24 +204,20 @@ const registerData = async (req, res) => {
     })
 
 
-    if(!insertTeacherSubClass[0].isNewRecord){
+    if(!insertTeacherSubClass[0]._options.isNewRecord){
       return res.status(OK).json({
         status: OK,
-        message: 'Record has already been created'
+        message: 'Record is already in the system'
       })
     }
 
     return res.status(CREATED).json({
       status: CREATED,
-      message: 'Status 201: Created'
+      message: 'Created'
     })
 
   } catch(err) {
     errHandler(err)
-    return res.status(BAD_REQUEST).json({
-      status: BAD_REQUEST,
-      message: 'Fields must be unique'
-    })
 
   }
 

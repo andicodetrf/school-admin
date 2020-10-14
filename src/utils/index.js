@@ -27,8 +27,20 @@ export const validateStringField = (str) => {
 export const validateEmailField = (eml) => {
   let reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
   return reg.test(eml)
-
 }
+
+
+//unique code & names
+export const validateUniqueCodeName = (obj) => {
+  let arr = Object.values(obj).map(item => item.toLowerCase())
+  for(let i = 0; i < arr.length; i++){
+    if(arr.indexOf(arr[i]) !== i){
+      return false
+    }
+  }
+  return true
+}
+
 
 //capitalize first character
 export const capitalizeFirstChar = (item) => {
@@ -72,6 +84,8 @@ export const formatClassCode = (cls) => {
   }
   return cls
 }
+
+
 
 
 
