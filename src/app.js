@@ -15,7 +15,7 @@ App.use(bodyParser.urlencoded( { extended: true } ));
 App.use('/api', router);
 
 App.use('*', (req,res) => {
-  res.status(404).json({
+  res.status(NOT_FOUND).json({
     status: NOT_FOUND,
     message: 'Not Found'
   })
