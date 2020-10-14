@@ -17,14 +17,26 @@ export const errHandler = (err) => {
   console.error('ERROR ---> : ', err)
 }
 
+//validate alphabets-only for name input
+export const validateStringField = (str) => {
+  let reg = /^[a-zA-Z]+$/
+  return str.match(reg)
+}
 
-//capitalize
+//validate email format for email input
+export const validateEmailField = (eml) => {
+  let reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+  return reg.test(eml)
+
+}
+
+//capitalize first character
 export const capitalizeFirstChar = (item) => {
   return item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()
 }
 
 
-//lowercase object data
+//lowercase name and email
 export const lowerCaseNameEmail = (obj) => {
   for(let i in obj){
     obj[i] = obj[i].toLowerCase();

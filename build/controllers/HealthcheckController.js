@@ -15,18 +15,13 @@ var _express = _interopRequireDefault(require("express"));
 
 var _httpStatusCodes = require("http-status-codes");
 
+var _index = require("../utils/index");
+
 var db = require('../config/db.config');
 
 var Teacher = db.teacher;
-var Student = db.student;
-var Subject = db.subject;
-var TClass = db.tclass;
 
 var HealthcheckController = _express["default"].Router();
-
-var errHandler = function errHandler(err) {
-  console.error('Error: ', err);
-};
 
 var healthcheckHandler = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
@@ -43,72 +38,37 @@ var healthcheckHandler = /*#__PURE__*/function () {
             foundTeachers = _context.sent;
 
             if (!foundTeachers) {
-              _context.next = 7;
+              _context.next = 6;
               break;
             }
 
-            console.log(foundTeachers);
-            return _context.abrupt("return", res.status(200).json(foundTeachers));
+            return _context.abrupt("return", res.status(_httpStatusCodes.OK).json({
+              status: _httpStatusCodes.OK,
+              foundTeachers: foundTeachers
+            }));
 
-          case 7:
-            _context.next = 12;
+          case 6:
+            _context.next = 11;
             break;
 
-          case 9:
-            _context.prev = 9;
+          case 8:
+            _context.prev = 8;
             _context.t0 = _context["catch"](0);
-            errHandler(_context.t0);
+            (0, _index.errHandler)(_context.t0);
 
-          case 12:
+          case 11:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 9]]);
+    }, _callee, null, [[0, 8]]);
   }));
 
   return function healthcheckHandler(_x, _x2) {
     return _ref.apply(this, arguments);
   };
-}(); // const healthCheckAdd = async (req, res) => {
-//   try{
-// //CREATE DATA
-// const addTeacher = {
-//   name: 'TeacherOne',
-//   email: 'T_ONEgmail.com'
-// }
-// // const addStudentOne = {
-// //   name: 'StudentOne',
-// //   email: 'St_One@gmail.com'
-// // }
-// // const addStudentTwo = {
-// //   name: 'StudentTwo',
-// //   email: 'St_Two@gmail.com'
-// // }
-// let { name, email } = addTeacher;
-// //INSERT INTO TABLE. gonna return a promise
-// await Teacher.create({
-//   name,
-//   email
-// })
-// await Student.bulkCreate([addStudentOne, addStudentTwo ])
-// await Subject.create({
-//   subjectName: 'English',
-//   subjectCode: 'ENG'
-// })
-// await TClass.create({
-//   className: 'P1-Integrity',
-//   classCode: 'P1-I'
-// })
-// res.redirect('/api/healthcheck')
-//   } catch(err){
-//     errHandler(err)
-//     res.sendStatus(400)
-//   }
-// }
+}();
 
-
-HealthcheckController.get('/healthcheck', healthcheckHandler); // HealthcheckController.get('/healthcheck/add', healthCheckAdd);
-
+HealthcheckController.get('/healthcheck', healthcheckHandler);
 var _default = HealthcheckController;
 exports["default"] = _default;

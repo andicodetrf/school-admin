@@ -15,6 +15,8 @@ var _express = _interopRequireDefault(require("express"));
 
 var _index = require("../utils/index");
 
+var _httpStatusCodes = require("http-status-codes");
+
 function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -34,114 +36,164 @@ var Register = _express["default"].Router();
 
 var registerData = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
-    var teacherData, studentsData, subjectData, classData, _iterator, _step, _i, studentsName, studentsEmail, _iterator2, _step2, _i2, insertTeacherData, teacherID, i, insertStudentsData, studentID, insertTeacherStudents, insertSubjectData, insertClassData, subjectID, classID, insertTeacherSubClass;
+    var _req$body, teacherData, studentsData, subjectData, classData, _iterator, _step, _i, studentsName, studentsEmail, _iterator2, _step2, _i2, insertTeacherData, teacherID, i, insertStudentsData, studentID, insertTeacherStudents, insertSubjectData, insertClassData, subjectID, classID, insertTeacherSubClass;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            teacherData = req.body.teacher;
-            studentsData = req.body.students; //array
-
-            subjectData = req.body.subject;
-            classData = req.body["class"]; // ------- INPUT/REQ BODY VALIDATION --------
+            _req$body = req.body, teacherData = _req$body.teacher, studentsData = _req$body.students, subjectData = _req$body.subject, classData = _req$body["class"]; // ------- INPUT/REQ BODY VALIDATION --------
 
             _context.t0 = true;
-            _context.next = _context.t0 === !teacherData.name ? 7 : _context.t0 === !teacherData.email ? 8 : _context.t0 === !studentsData ? 9 : _context.t0 === !studentsData.length ? 9 : _context.t0 === !Object.keys(studentsData).length ? 9 : _context.t0 === !subjectData.subjectCode ? 10 : _context.t0 === !subjectData.name ? 11 : _context.t0 === !classData.classCode ? 12 : _context.t0 === !classData.name ? 13 : 14;
+            _context.next = _context.t0 === !teacherData.name ? 4 : _context.t0 === !teacherData.email ? 5 : _context.t0 === !studentsData ? 6 : _context.t0 === !studentsData.length ? 6 : _context.t0 === !Object.keys(studentsData).length ? 6 : _context.t0 === !subjectData.subjectCode ? 7 : _context.t0 === !subjectData.name ? 8 : _context.t0 === !classData.classCode ? 9 : _context.t0 === !classData.name ? 10 : 11;
             break;
 
+          case 4:
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Teacher's name input not found"
+            }));
+
+          case 5:
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Teacher's email input not found"
+            }));
+
+          case 6:
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Require at least one student (name and email) for registration"
+            }));
+
           case 7:
-            return _context.abrupt("return", res.status(400).json({
-              message: "Error 400: Teacher's name input not found"
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Subject Code input not found"
             }));
 
           case 8:
-            return _context.abrupt("return", res.status(400).json({
-              message: "Error 400: Teacher's email input not found"
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Subject Name input not found"
             }));
 
           case 9:
-            return _context.abrupt("return", res.status(400).json({
-              message: "Error 400: Student's details not found"
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Class Code input not found"
             }));
 
           case 10:
-            return _context.abrupt("return", res.status(400).json({
-              message: "Error 400: Subject Code not found"
-            }));
-
-          case 11:
-            return _context.abrupt("return", res.status(400).json({
-              message: "Error 400: Subject Name not found"
-            }));
-
-          case 12:
-            return _context.abrupt("return", res.status(400).json({
-              message: "Error 400: Class Code not found"
-            }));
-
-          case 13:
-            return _context.abrupt("return", res.status(400).json({
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
               message: "Error 400: Class Name not found"
             }));
 
-          case 14:
-            //Check if there is name' and 'email' in student object within students array
+          case 11:
+            if ((0, _index.validateStringField)(teacherData.name)) {
+              _context.next = 13;
+              break;
+            }
+
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Teacher's name must be alphabet only"
+            }));
+
+          case 13:
+            if ((0, _index.validateEmailField)(teacherData.email)) {
+              _context.next = 15;
+              break;
+            }
+
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Teacher's email must be in email format"
+            }));
+
+          case 15:
+            //Check if there is 'name' and 'email' in student. Validate name and email format
             _iterator = _createForOfIteratorHelper(studentsData);
-            _context.prev = 15;
+            _context.prev = 16;
 
             _iterator.s();
 
-          case 17:
+          case 18:
             if ((_step = _iterator.n()).done) {
-              _context.next = 25;
+              _context.next = 30;
               break;
             }
 
             _i = _step.value;
 
             if (_i.name) {
-              _context.next = 21;
+              _context.next = 22;
               break;
             }
 
-            return _context.abrupt("return", res.status(400).json({
-              message: "Error 400: Student's name not found"
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Student's name input not found"
             }));
 
-          case 21:
+          case 22:
             if (_i.email) {
-              _context.next = 23;
+              _context.next = 24;
               break;
             }
 
-            return _context.abrupt("return", res.status(400).json({
-              message: "Error 400: Student's email not found"
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Student's email input not found"
             }));
 
-          case 23:
-            _context.next = 17;
+          case 24:
+            if ((0, _index.validateStringField)(_i.name)) {
+              _context.next = 26;
+              break;
+            }
+
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Student's name must be alphabet only"
+            }));
+
+          case 26:
+            if ((0, _index.validateEmailField)(_i.email)) {
+              _context.next = 28;
+              break;
+            }
+
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Student's email must be in email format"
+            }));
+
+          case 28:
+            _context.next = 18;
             break;
 
-          case 25:
-            _context.next = 30;
+          case 30:
+            _context.next = 35;
             break;
 
-          case 27:
-            _context.prev = 27;
-            _context.t1 = _context["catch"](15);
+          case 32:
+            _context.prev = 32;
+            _context.t1 = _context["catch"](16);
 
             _iterator.e(_context.t1);
 
-          case 30:
-            _context.prev = 30;
+          case 35:
+            _context.prev = 35;
 
             _iterator.f();
 
-            return _context.finish(30);
+            return _context.finish(35);
 
-          case 33:
+          case 38:
             // ------- DATA CLEANING --------
+            //lowercase names and emails for teacher & students
             (0, _index.lowerCaseNameEmail)(teacherData);
             studentsName = [];
             studentsEmail = [];
@@ -152,7 +204,8 @@ var registerData = /*#__PURE__*/function () {
                 _i2 = _step2.value;
                 studentsName.push(_i2.name.toLowerCase());
                 studentsEmail.push(_i2.email.toLowerCase());
-              }
+              } //capitalize subject and class names, uppercase subject & class codes
+
             } catch (err) {
               _iterator2.e(err);
             } finally {
@@ -162,8 +215,8 @@ var registerData = /*#__PURE__*/function () {
             (0, _index.formatSubjectCode)(subjectData);
             (0, _index.formatClassCode)(classData); // ------- ACCESSING DB FOR DATA CREATION OR LOOKUP --------
 
-            _context.prev = 40;
-            _context.next = 43;
+            _context.prev = 45;
+            _context.next = 48;
             return Teacher.findOrCreate({
               where: {
                 email: teacherData.email,
@@ -173,18 +226,18 @@ var registerData = /*#__PURE__*/function () {
 
             });
 
-          case 43:
+          case 48:
             insertTeacherData = _context.sent;
             teacherID = insertTeacherData[0].dataValues.id;
             i = 0;
 
-          case 46:
+          case 51:
             if (!(i < studentsEmail.length)) {
-              _context.next = 57;
+              _context.next = 62;
               break;
             }
 
-            _context.next = 49;
+            _context.next = 54;
             return Student.findOrCreate({
               where: {
                 email: studentsEmail[i],
@@ -192,10 +245,10 @@ var registerData = /*#__PURE__*/function () {
               }
             });
 
-          case 49:
+          case 54:
             insertStudentsData = _context.sent;
             studentID = insertStudentsData[0].dataValues.id;
-            _context.next = 53;
+            _context.next = 58;
             return Teacher_Student.findOrCreate({
               where: {
                 teacherId: teacherID,
@@ -203,16 +256,16 @@ var registerData = /*#__PURE__*/function () {
               }
             });
 
-          case 53:
+          case 58:
             insertTeacherStudents = _context.sent;
 
-          case 54:
+          case 59:
             i++;
-            _context.next = 46;
+            _context.next = 51;
             break;
 
-          case 57:
-            _context.next = 59;
+          case 62:
+            _context.next = 64;
             return Subject.findOrCreate({
               where: {
                 subjectCode: subjectData.subjectCode,
@@ -220,9 +273,9 @@ var registerData = /*#__PURE__*/function () {
               }
             });
 
-          case 59:
+          case 64:
             insertSubjectData = _context.sent;
-            _context.next = 62;
+            _context.next = 67;
             return TClass.findOrCreate({
               where: {
                 classCode: classData.classCode,
@@ -230,11 +283,11 @@ var registerData = /*#__PURE__*/function () {
               }
             });
 
-          case 62:
+          case 67:
             insertClassData = _context.sent;
             subjectID = insertSubjectData[0].dataValues.id;
             classID = insertClassData[0].dataValues.id;
-            _context.next = 67;
+            _context.next = 72;
             return Teacher_Sub_Class.findOrCreate({
               where: {
                 teacherId: teacherID,
@@ -243,37 +296,40 @@ var registerData = /*#__PURE__*/function () {
               }
             });
 
-          case 67:
+          case 72:
             insertTeacherSubClass = _context.sent;
 
             if (insertTeacherSubClass[0].isNewRecord) {
-              _context.next = 70;
+              _context.next = 75;
               break;
             }
 
-            return _context.abrupt("return", res.status(200).json({
+            return _context.abrupt("return", res.status(_httpStatusCodes.OK).json({
+              status: _httpStatusCodes.OK,
               message: 'Record has already been created'
             }));
 
-          case 70:
-            return _context.abrupt("return", res.status(201).json({
+          case 75:
+            return _context.abrupt("return", res.status(_httpStatusCodes.CREATED).json({
+              status: _httpStatusCodes.CREATED,
               message: 'Status 201: Created'
             }));
 
-          case 73:
-            _context.prev = 73;
-            _context.t2 = _context["catch"](40);
+          case 78:
+            _context.prev = 78;
+            _context.t2 = _context["catch"](45);
             (0, _index.errHandler)(_context.t2);
-            return _context.abrupt("return", res.status(400).json({
-              message: 'Error 400: Fields must be unique'
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: 'Fields must be unique'
             }));
 
-          case 77:
+          case 82:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[15, 27, 30, 33], [40, 73]]);
+    }, _callee, null, [[16, 32, 35, 38], [45, 78]]);
   }));
 
   return function registerData(_x, _x2) {

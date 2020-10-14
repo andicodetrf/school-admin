@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.formatClassCode = exports.formatSubjectCode = exports.lowerCaseNameEmail = exports.capitalizeFirstChar = exports.errHandler = exports.convertCsvToJson = void 0;
+exports.formatClassCode = exports.formatSubjectCode = exports.lowerCaseNameEmail = exports.capitalizeFirstChar = exports.validateEmailField = exports.validateStringField = exports.errHandler = exports.convertCsvToJson = void 0;
 
 var _fs = _interopRequireDefault(require("fs"));
 
@@ -34,14 +34,28 @@ exports.convertCsvToJson = convertCsvToJson;
 
 var errHandler = function errHandler(err) {
   console.error('ERROR ---> : ', err);
-}; //capitalize
-
+};
 
 exports.errHandler = errHandler;
 
+var validateStringField = function validateStringField(str) {
+  var reg = /^[a-zA-Z]+$/;
+  return str.match(reg);
+};
+
+exports.validateStringField = validateStringField;
+
+var validateEmailField = function validateEmailField(eml) {
+  var reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+  return reg.test(eml);
+}; //capitalize first character
+
+
+exports.validateEmailField = validateEmailField;
+
 var capitalizeFirstChar = function capitalizeFirstChar(item) {
   return item.charAt(0).toUpperCase() + item.slice(1).toLowerCase();
-}; //lowercase object data
+}; //lowercase name and email
 
 
 exports.capitalizeFirstChar = capitalizeFirstChar;

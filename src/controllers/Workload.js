@@ -4,6 +4,7 @@ const Teacher = db.teacher;
 const Subject = db.subject;
 const TClass = db.tclass;
 import { errHandler } from '../utils/index'
+import { OK } from 'http-status-codes';
 
 const Workload = Express.Router();
 
@@ -16,7 +17,7 @@ const generateReport = async(req, res) => {
 
     let teachersData = []
     for(let i of teachersIDArr){
-      let teachersSubsClass = await Teacher.findAll({
+      let teacherSubClass = await Teacher.findAll({
         where: { id: i },
         include: [{
           model: Subject,
@@ -28,7 +29,7 @@ const generateReport = async(req, res) => {
           }]
         }],
       });
-      teachersData.push(teachersSubsClass)
+      teachersData.push(teacherSubClass)
     }
 
     let report = {}
@@ -48,7 +49,10 @@ const generateReport = async(req, res) => {
       report[teachersNameArr[h]] = subjectsTaken
     }
 
-    return res.status(200).json(report)
+    return res.status(OK).json({
+      status: OK,
+      report
+    })
 
   }catch(err){
     errHandler(err)
@@ -57,4 +61,3 @@ const generateReport = async(req, res) => {
 
 Workload.get('/reports/workload', generateReport);
 export default Workload;
-// export default generateReport;

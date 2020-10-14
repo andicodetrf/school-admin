@@ -17,6 +17,8 @@ var _bodyParser = _interopRequireDefault(require("body-parser"));
 
 var _router = _interopRequireDefault(require("./router"));
 
+var _httpStatusCodes = require("http-status-codes");
+
 var _globalErrorHandler = _interopRequireDefault(require("./config/globalErrorHandler"));
 
 var App = (0, _express["default"])();
@@ -27,6 +29,12 @@ App.use(_bodyParser["default"].urlencoded({
   extended: true
 }));
 App.use('/api', _router["default"]);
+App.use('*', function (req, res) {
+  res.status(404).json({
+    status: _httpStatusCodes.NOT_FOUND,
+    message: 'Not Found'
+  });
+});
 App.use(_globalErrorHandler["default"]);
 var _default = App;
 exports["default"] = _default;

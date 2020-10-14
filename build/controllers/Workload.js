@@ -15,6 +15,8 @@ var _express = _interopRequireDefault(require("express"));
 
 var _index = require("../utils/index");
 
+var _httpStatusCodes = require("http-status-codes");
+
 function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -31,7 +33,7 @@ var Workload = _express["default"].Router();
 
 var generateReport = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
-    var teachers, teachersIDArr, teachersNameArr, teachersData, _iterator, _step, _i, teachersSubsClass, report, h, subjectsTaken, i, module;
+    var teachers, teachersIDArr, teachersNameArr, teachersData, _iterator, _step, _i, teacherSubClass, report, h, subjectsTaken, i, module;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
@@ -83,8 +85,8 @@ var generateReport = /*#__PURE__*/function () {
             });
 
           case 14:
-            teachersSubsClass = _context.sent;
-            teachersData.push(teachersSubsClass);
+            teacherSubClass = _context.sent;
+            teachersData.push(teacherSubClass);
 
           case 16:
             _context.next = 10;
@@ -124,7 +126,10 @@ var generateReport = /*#__PURE__*/function () {
               report[teachersNameArr[h]] = subjectsTaken;
             }
 
-            return _context.abrupt("return", res.status(200).json(report));
+            return _context.abrupt("return", res.status(_httpStatusCodes.OK).json({
+              status: _httpStatusCodes.OK,
+              report: report
+            }));
 
           case 31:
             _context.prev = 31;
@@ -145,6 +150,5 @@ var generateReport = /*#__PURE__*/function () {
 }();
 
 Workload.get('/reports/workload', generateReport);
-var _default = Workload; // export default generateReport;
-
+var _default = Workload;
 exports["default"] = _default;

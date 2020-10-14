@@ -6,58 +6,116 @@ const Subject = db.subject;
 const TClass = db.tclass;
 const Teacher_Student = db.teacher_student;
 const Teacher_Sub_Class = db.teacher_sub_class;
-import {formatClassCode, formatSubjectCode, lowerCaseNameEmail, errHandler} from '../utils/index'
+import {formatClassCode, formatSubjectCode, lowerCaseNameEmail, errHandler, validateEmailField, validateStringField} from '../utils/index'
+import { BAD_REQUEST, OK, CREATED } from 'http-status-codes';
 
 const Register = Express.Router();
 
 const registerData = async (req, res) => {
 
-  const teacherData = req.body.teacher;
-  const studentsData = req.body.students; //array
-  const subjectData = req.body.subject;
-  const classData = req.body.class;
+  const {
+    teacher: teacherData,
+    students: studentsData,
+    subject:subjectData,
+    class: classData
+  } = req.body
 
-
-// ------- INPUT/REQ BODY VALIDATION --------
+  // ------- INPUT/REQ BODY VALIDATION --------
   switch(true) {
   case !teacherData.name:
-    return res.status(400).json({message: `Error 400: Teacher's name input not found`})
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Teacher's name input not found`
+    })
 
   case !teacherData.email:
-    return res.status(400).json({message: `Error 400: Teacher's email input not found`})
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Teacher's email input not found`
+    })
 
   case !studentsData: //for completely missing 'students:'
   case !studentsData.length: //for students = []
   case !Object.keys(studentsData).length: //for students = {}
-    return res.status(400).json({message: `Error 400: Student's details not found`})
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Require at least one student (name and email) for registration`
+    })
 
   case !subjectData.subjectCode:
-    return res.status(400).json({message: `Error 400: Subject Code not found`})
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Subject Code input not found`
+    })
 
   case !subjectData.name:
-    return res.status(400).json({message: `Error 400: Subject Name not found`})
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Subject Name input not found`
+    })
 
   case !classData.classCode:
-    return res.status(400).json({message: `Error 400: Class Code not found`})
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Class Code input not found`
+    })
 
   case !classData.name:
-    return res.status(400).json({message: `Error 400: Class Name not found`})
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Error 400: Class Name not found`
+    })
 
   }
 
+  //Validate name and email field (Teacher)
+  if(!validateStringField(teacherData.name)){
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Teacher's name must be alphabet only`
+    })
+  }
 
-  //Check if there is name' and 'email' in student object within students array
+  if(!validateEmailField(teacherData.email)){
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Teacher's email must be in email format`
+    })
+  }
+
+  //Check if there is 'name' and 'email' in student. Validate name and email format
   for(let i of studentsData){
     if(!i.name){
-      return res.status(400).json({message: `Error 400: Student's name not found`})
+      return res.status(BAD_REQUEST).json({
+        status: BAD_REQUEST,
+        message: `Student's name input not found`
+      })
+
     }
     if(!i.email){
-      return res.status(400).json({message: `Error 400: Student's email not found`})
+      return res.status(BAD_REQUEST).json({
+        status: BAD_REQUEST,
+        message: `Student's email input not found`
+      })
+    }
+    if(!validateStringField(i.name)){
+      return res.status(BAD_REQUEST).json({
+        status: BAD_REQUEST,
+        message: `Student's name must be alphabet only`
+      })
+    }
+    if(!validateEmailField(i.email)){
+      return res.status(BAD_REQUEST).json({
+        status: BAD_REQUEST,
+        message: `Student's email must be in email format`
+      })
     }
   }
 
-// ------- DATA CLEANING --------
 
+  // ------- DATA CLEANING --------
+
+  //lowercase names and emails for teacher & students
   lowerCaseNameEmail(teacherData);
 
   let studentsName = []
@@ -67,10 +125,11 @@ const registerData = async (req, res) => {
     studentsEmail.push(i.email.toLowerCase());
   }
 
+  //capitalize subject and class names, uppercase subject & class codes
   formatSubjectCode(subjectData)
   formatClassCode(classData)
 
-// ------- ACCESSING DB FOR DATA CREATION OR LOOKUP --------
+  // ------- ACCESSING DB FOR DATA CREATION OR LOOKUP --------
   try{
 
     let insertTeacherData = await Teacher.findOrCreate({
@@ -131,15 +190,23 @@ const registerData = async (req, res) => {
 
 
     if(!insertTeacherSubClass[0].isNewRecord){
-      return res.status(200).json({message: 'Record has already been created'})
+      return res.status(OK).json({
+        status: OK,
+        message: 'Record has already been created'
+      })
     }
 
+    return res.status(CREATED).json({
+      status: CREATED,
+      message: 'Status 201: Created'
+    })
 
-    return res.status(201).json({message: 'Status 201: Created'})
-
-  } catch(err){
+  } catch(err) {
     errHandler(err)
-    return res.status(400).json({message: 'Error 400: Fields must be unique'})
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: 'Fields must be unique'
+    })
 
   }
 

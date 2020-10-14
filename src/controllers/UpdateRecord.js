@@ -4,52 +4,84 @@ const Teacher = db.teacher;
 const Student = db.student;
 const Subject = db.subject;
 const TClass = db.tclass;
-import {lowerCaseNameEmail, formatSubjectCode, formatClassCode, errHandler} from '../utils/index'
+import {lowerCaseNameEmail, formatSubjectCode, formatClassCode, errHandler, validateEmailField, validateStringField} from '../utils/index'
+import { BAD_REQUEST, OK, NOT_FOUND } from 'http-status-codes';
 
 const UpdateRecord = Express.Router();
 
 const updateData = async (req, res) => {
 
-  const editTeacher = req.body.teacher;
-  const editStudent = req.body.student;
-  const editSubject = req.body.subject;
-  const editClass = req.body.class;
+  const {
+    teacher: editTeacher,
+    student: editStudent,
+    subject: editSubject,
+    class: editClass
+  } = req.body
+
 
   //---- VALIDATE REQUEST BODY STRUCTURE
   if(Object.keys(req.body).length !== 1){
-    return res.status(400).json({message: 'Error 400: Kindly update only Teacher, Student, Subject or Class information at one time'})
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: 'Kindly update only Teacher, Student, Subject or Class information at one time'})
   }
 
   //---- VALIDATE REQUEST BODY INPUT FUNCTIONS
   const checkPersonForm = (person) => {
     if(!person.email || !person.updateName || !person.updateEmail ){
-      return res.status(400).json({message: `Error 400: Kindly complete the update with existing email(email: 'jd@gmail.com'), new name(updateName: 'John') and new email(updateEmail: 'john@gmail.com') `})
+      return res.status(BAD_REQUEST).json({
+        status: BAD_REQUEST,
+        message: `Kindly complete the update with existing email(email: 'jd@gmail.com'), new name(updateName: 'John') and new email(updateEmail: 'john@gmail.com') `
+      })
     }
 
-    if(person.updateName === person.updateEmail){
-      return res.status(400).json({message: `Email and Name to be updated must be unique from one another`})
+    if(!validateStringField(person.updateName)){
+      return res.status(BAD_REQUEST).json({
+        status: BAD_REQUEST,
+        message: 'Name must be alphabet only'
+      })
     }
+
+    if(!validateEmailField(person.email) || !validateEmailField(person.updateEmail)){
+      return res.status(BAD_REQUEST).json({
+        status: BAD_REQUEST,
+        message: 'Email must be in email format'
+      })
+    }
+
     return 'toUpdate'
   }
 
   const checkSubjectForm = (sub) => {
     if(!sub.subjectCode || !sub.updateName || !sub.updateSubjectCode){
-      return res.status(400).json({message: 'Error 400: Kindly complete the update with existing subject code (subjectCode: "ENG"), new subject name(updateName: "English2") and new subject code(updateSubjectCode: "ENG2").'})
+      return res.status(BAD_REQUEST).json({
+        status: BAD_REQUEST,
+        message: 'Kindly complete the update with existing subject code (subjectCode: "ENG"), new subject name(updateName: "English2") and new subject code(updateSubjectCode: "ENG2").'
+      })
     }
 
     if(sub.updateName === sub.updateSubjectCode){
-      return res.status(400).json({message: 'Name and Code to be updated must be unique from one another'})
+      return res.status(BAD_REQUEST).json({
+        status: BAD_REQUEST,
+        message: 'Name and Code due for update must be unique from one another'
+      })
     }
     return 'toUpdate'
   }
 
   const checkClassForm = (cls) => {
     if(!cls.classCode || !cls.updateName || !cls.updateClassCode){
-      return res.status(400).json({message: 'Error 400: Kindly complete the update with existing class code (classCode: "P1-I"), new class name(updateName: "P1-Unity") and new class code(updateSubjectCode: "P1-U").'})
+      return res.status(BAD_REQUEST).json({
+        status: BAD_REQUEST,
+        message: 'Kindly complete the update with existing class code (classCode: "P1-I"), new class name(updateName: "P1-Unity") and new class code(updateSubjectCode: "P1-U").'
+      })
     }
 
     if(cls.updateName === cls.updateClassCode){
-      return res.status(400).json({message: 'Name and Code to be updated must be unique from one another'})
+      return res.status(BAD_REQUEST).json({
+        status: BAD_REQUEST,
+        message: 'Name and Code due for update must be unique from one another'
+      })
     }
     return 'toUpdate'
   }
@@ -65,9 +97,15 @@ const updateData = async (req, res) => {
     console.log('UP_PERSON_DETAILS', updatePersonDetails)
 
     if(updatePersonDetails[0]){
-      return res.status(200).json({message: '200: Person details updated'})
+      return res.status(OK).json({
+        status: OK,
+        message: 'Person details updated'
+      })
     } else {
-      return res.status(400).json({message: 'Error 400: Email not found. Kindly register'})
+      return res.status(NOT_FOUND).json({
+        status: NOT_FOUND,
+        message: 'Email not found. Kindly register'
+      })
     }
   }
 
@@ -81,9 +119,15 @@ const updateData = async (req, res) => {
     console.log('UP_SUB_DETAILS', updateSubjectDetails)
 
     if(updateSubjectDetails[0]){
-      return res.status(200).json({message: '200: Subject details updated'})
+      return res.status(OK).json({
+        status: OK,
+        message: 'Subject details updated'
+      })
     } else {
-      return res.status(400).json({message: 'Error 400: Subject Code Not Found. Kindly register'})
+      return res.status(NOT_FOUND).json({
+        status: NOT_FOUND,
+        message: 'Subject Code Not Found. Kindly register'
+      })
     }
   }
 
@@ -97,9 +141,15 @@ const updateData = async (req, res) => {
     console.log('UP_CLASS_DETAILS', updateClassDetails)
 
     if(updateClassDetails[0]){
-      return res.status(200).json({message: '200: Class details updated'})
+      return res.status(OK).json({
+        status: OK,
+        message: 'Class details updated'
+      })
     } else {
-      return res.status(400).json({message: 'Error 400: Class Code Not Found. Kindly register'})
+      return res.status(NOT_FOUND).json({
+        status: NOT_FOUND,
+        message: 'Class Code Not Found. Kindly register'
+      })
     }
   }
 
@@ -124,7 +174,6 @@ const updateData = async (req, res) => {
       formatClassCode(editClass)
       updateClassData(editClass)
     }
-
 
   } catch(err) {
     errHandler(err)

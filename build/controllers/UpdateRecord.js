@@ -15,6 +15,8 @@ var _express = _interopRequireDefault(require("express"));
 
 var _index = require("../utils/index");
 
+var _httpStatusCodes = require("http-status-codes");
+
 var db = require('../config/db.config');
 
 var Teacher = db.teacher;
@@ -26,26 +28,45 @@ var UpdateRecord = _express["default"].Router();
 
 var updateData = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(req, res) {
-    var editTeacher, editStudent, editSubject, editClass, checkPersonForm, checkSubjectForm, checkClassForm, updatePersonData, updateSubjectData, updateClassData;
+    var _req$body, editTeacher, editStudent, editSubject, editClass, checkPersonForm, checkSubjectForm, checkClassForm, updatePersonData, updateSubjectData, updateClassData;
+
     return _regenerator["default"].wrap(function _callee4$(_context4) {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            editTeacher = req.body.teacher;
-            editStudent = req.body.student;
-            editSubject = req.body.subject;
-            editClass = req.body["class"];
+            _req$body = req.body, editTeacher = _req$body.teacher, editStudent = _req$body.student, editSubject = _req$body.subject, editClass = _req$body["class"]; //---- VALIDATE REQUEST BODY STRUCTURE
 
+            if (!(Object.keys(req.body).length !== 1)) {
+              _context4.next = 3;
+              break;
+            }
+
+            return _context4.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: 'Kindly update only Teacher, Student, Subject or Class information at one time'
+            }));
+
+          case 3:
+            //---- VALIDATE REQUEST BODY INPUT FUNCTIONS
             checkPersonForm = function checkPersonForm(person) {
               if (!person.email || !person.updateName || !person.updateEmail) {
-                return res.status(400).json({
-                  message: "Error 400: Kindly complete the update with existing email(email: 'jd@gmail.com'), new name(updateName: 'John') and new email(updateEmail: 'john@gmail.com') "
+                return res.status(_httpStatusCodes.BAD_REQUEST).json({
+                  status: _httpStatusCodes.BAD_REQUEST,
+                  message: "Kindly complete the update with existing email(email: 'jd@gmail.com'), new name(updateName: 'John') and new email(updateEmail: 'john@gmail.com') "
                 });
               }
 
-              if (person.updateName === person.updateEmail) {
-                return res.status(400).json({
-                  message: "Email and Name to be updated must be unique from one another"
+              if (!(0, _index.validateStringField)(person.updateName)) {
+                return res.status(_httpStatusCodes.BAD_REQUEST).json({
+                  status: _httpStatusCodes.BAD_REQUEST,
+                  message: 'Name must be alphabet only'
+                });
+              }
+
+              if (!(0, _index.validateEmailField)(person.email) || !(0, _index.validateEmailField)(person.updateEmail)) {
+                return res.status(_httpStatusCodes.BAD_REQUEST).json({
+                  status: _httpStatusCodes.BAD_REQUEST,
+                  message: 'Email must be in email format'
                 });
               }
 
@@ -54,42 +75,41 @@ var updateData = /*#__PURE__*/function () {
 
             checkSubjectForm = function checkSubjectForm(sub) {
               if (!sub.subjectCode || !sub.updateName || !sub.updateSubjectCode) {
-                return res.status(400).json({
-                  message: 'Error 400: Kindly complete the update with existing subject code (subjectCode: "ENG"), new subject name(updateName: "English2") and new subject code(updateSubjectCode: "ENG2").'
+                return res.status(_httpStatusCodes.BAD_REQUEST).json({
+                  status: _httpStatusCodes.BAD_REQUEST,
+                  message: 'Kindly complete the update with existing subject code (subjectCode: "ENG"), new subject name(updateName: "English2") and new subject code(updateSubjectCode: "ENG2").'
                 });
               }
 
               if (sub.updateName === sub.updateSubjectCode) {
-                return res.status(400).json({
-                  message: 'Name and Code to be updated must be unique from one another'
+                return res.status(_httpStatusCodes.BAD_REQUEST).json({
+                  status: _httpStatusCodes.BAD_REQUEST,
+                  message: 'Name and Code due for update must be unique from one another'
                 });
               }
+
+              return 'toUpdate';
             };
 
             checkClassForm = function checkClassForm(cls) {
               if (!cls.classCode || !cls.updateName || !cls.updateClassCode) {
-                return res.status(400).json({
-                  message: 'Error 400: Kindly complete the update with existing class code (classCode: "P1-I"), new class name(updateName: "P1-Unity") and new class code(updateSubjectCode: "P1-U").'
+                return res.status(_httpStatusCodes.BAD_REQUEST).json({
+                  status: _httpStatusCodes.BAD_REQUEST,
+                  message: 'Kindly complete the update with existing class code (classCode: "P1-I"), new class name(updateName: "P1-Unity") and new class code(updateSubjectCode: "P1-U").'
                 });
               }
 
               if (cls.updateName === cls.updateClassCode) {
-                return res.status(400).json({
-                  message: 'Name and Code to be updated must be unique from one another'
+                return res.status(_httpStatusCodes.BAD_REQUEST).json({
+                  status: _httpStatusCodes.BAD_REQUEST,
+                  message: 'Name and Code due for update must be unique from one another'
                 });
               }
-            };
 
-            if (!(Object.keys(req.body).length !== 1)) {
-              _context4.next = 9;
-              break;
-            }
+              return 'toUpdate';
+            }; //---- UPDATE DATA FUNCTIONS
 
-            return _context4.abrupt("return", res.status(400).json({
-              message: 'Error 400: Kindly update only Teacher, Student, Subject or Class information at one time'
-            }));
 
-          case 9:
             updatePersonData = /*#__PURE__*/function () {
               var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(person, model) {
                 var updatePersonDetails;
@@ -116,13 +136,15 @@ var updateData = /*#__PURE__*/function () {
                           break;
                         }
 
-                        return _context.abrupt("return", res.status(200).json({
-                          message: '200: Person details updated'
+                        return _context.abrupt("return", res.status(_httpStatusCodes.OK).json({
+                          status: _httpStatusCodes.OK,
+                          message: 'Person details updated'
                         }));
 
                       case 8:
-                        return _context.abrupt("return", res.status(400).json({
-                          message: 'Error 400: Email not found. Kindly register'
+                        return _context.abrupt("return", res.status(_httpStatusCodes.NOT_FOUND).json({
+                          status: _httpStatusCodes.NOT_FOUND,
+                          message: 'Email not found. Kindly register'
                         }));
 
                       case 9:
@@ -164,13 +186,15 @@ var updateData = /*#__PURE__*/function () {
                           break;
                         }
 
-                        return _context2.abrupt("return", res.status(200).json({
-                          message: '200: Subject details updated'
+                        return _context2.abrupt("return", res.status(_httpStatusCodes.OK).json({
+                          status: _httpStatusCodes.OK,
+                          message: 'Subject details updated'
                         }));
 
                       case 8:
-                        return _context2.abrupt("return", res.status(400).json({
-                          message: 'Error 400: Subject Code Not Found. Kindly register'
+                        return _context2.abrupt("return", res.status(_httpStatusCodes.NOT_FOUND).json({
+                          status: _httpStatusCodes.NOT_FOUND,
+                          message: 'Subject Code Not Found. Kindly register'
                         }));
 
                       case 9:
@@ -212,13 +236,15 @@ var updateData = /*#__PURE__*/function () {
                           break;
                         }
 
-                        return _context3.abrupt("return", res.status(200).json({
-                          message: '200: Class details updated'
+                        return _context3.abrupt("return", res.status(_httpStatusCodes.OK).json({
+                          status: _httpStatusCodes.OK,
+                          message: 'Class details updated'
                         }));
 
                       case 8:
-                        return _context3.abrupt("return", res.status(400).json({
-                          message: 'Error 400: Class Code Not Found. Kindly register'
+                        return _context3.abrupt("return", res.status(_httpStatusCodes.NOT_FOUND).json({
+                          status: _httpStatusCodes.NOT_FOUND,
+                          message: 'Class Code Not Found. Kindly register'
                         }));
 
                       case 9:
@@ -240,17 +266,17 @@ var updateData = /*#__PURE__*/function () {
                 updatePersonData(editTeacher, Teacher);
               }
 
-              if (editStudent) {
+              if (editStudent && checkPersonForm(editStudent) === 'toUpdate') {
                 (0, _index.lowerCaseNameEmail)(editStudent);
                 updatePersonData(editStudent, Student);
               }
 
-              if (editSubject) {
+              if (editSubject && checkSubjectForm(editSubject) === 'toUpdate') {
                 (0, _index.formatSubjectCode)(editSubject);
                 updateSubjectData(editSubject);
               }
 
-              if (editClass) {
+              if (editClass && checkClassForm(editClass) === 'toUpdate') {
                 (0, _index.formatClassCode)(editClass);
                 updateClassData(editClass);
               }
@@ -258,7 +284,7 @@ var updateData = /*#__PURE__*/function () {
               (0, _index.errHandler)(err);
             }
 
-          case 13:
+          case 10:
           case "end":
             return _context4.stop();
         }

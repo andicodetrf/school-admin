@@ -9,7 +9,7 @@ import WorkloadDum from './controllers/WorkloadDummy';
 const router = Express.Router();
 
 router.use('/', HealthcheckController, Register, UpdateRecord, Workload, WorkloadDum);
-// router.get('/reports/workload', generateReport)
+
 
 
 export default router;
