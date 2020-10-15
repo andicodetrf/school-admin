@@ -124,7 +124,7 @@ Postman is used for performing the following API interactions.
 http://localhost:3000[URL Endpoint]
 ```
 
-| Request Method | URL Endpoint             | Functionality                                                             |
+| Request Method | URL Endpoint             | Features                                                            |
 | -------------- | ------------------------ | ------------------------------------------------------------------------- |
 | POST           | /api/register            | Register Teacher with Students, Subject and Class                         |
 | POST           | /api/register/update     | Update registered Teacher's, Student's, Subject's or Class' Information  |
