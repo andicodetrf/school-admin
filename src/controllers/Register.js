@@ -7,7 +7,7 @@ const TClass = db.tclass;
 const Teacher_Student = db.teacher_student;
 const Teacher_Sub_Class = db.teacher_sub_class;
 import {formatClassCode, formatSubjectCode, lowerCaseNameEmail, errHandler, validateEmailField, validateStringField, validateUniqueCodeName} from '../utils/index'
-import { BAD_REQUEST, OK, CREATED } from 'http-status-codes';
+import { BAD_REQUEST, OK, NO_CONTENT } from 'http-status-codes';
 
 const Register = Express.Router();
 
@@ -203,7 +203,7 @@ const registerData = async (req, res) => {
       }
     })
 
-
+    //Informs user that the record already exist in DB
     if(!insertTeacherSubClass[0]._options.isNewRecord){
       return res.status(OK).json({
         status: OK,
@@ -211,10 +211,8 @@ const registerData = async (req, res) => {
       })
     }
 
-    return res.status(CREATED).json({
-      status: CREATED,
-      message: 'Created'
-    })
+    //Status No Content (204) if successfully created/registered
+    return res.sendStatus(NO_CONTENT)
 
   } catch(err) {
     errHandler(err)

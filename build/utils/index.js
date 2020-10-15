@@ -40,15 +40,15 @@ var errHandler = function errHandler(err) {
 exports.errHandler = errHandler;
 
 var validateStringField = function validateStringField(str) {
-  var reg = /^[a-zA-Z]+$/;
-  return str.match(reg);
+  var reg = /^(?![ .]+$)[a-zA-Z0-9\-' .]*$/;
+  return reg.test(str);
 }; //validate email format for email input
 
 
 exports.validateStringField = validateStringField;
 
 var validateEmailField = function validateEmailField(eml) {
-  var reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+  var reg = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
   return reg.test(eml);
 }; //unique code & names
 

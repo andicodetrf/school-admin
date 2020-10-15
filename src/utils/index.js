@@ -19,13 +19,13 @@ export const errHandler = (err) => {
 
 //validate alphabets-only for name input
 export const validateStringField = (str) => {
-  const reg = /^[a-zA-Z]+$/
-  return str.match(reg)
+  const reg = /^(?![ .]+$)[a-zA-Z0-9\-' .]*$/
+  return reg.test(str)
 }
 
 //validate email format for email input
 export const validateEmailField = (eml) => {
-  const reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+  const reg = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g
   return reg.test(eml)
 }
 
