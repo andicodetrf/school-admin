@@ -6,6 +6,7 @@ const Subject = db.subject;
 const TClass = db.tclass;
 const Teacher_Student = db.teacher_student;
 const Teacher_Sub_Class = db.teacher_sub_class;
+const Student_Class = db.student_class;
 import {formatClassCode, formatSubjectCode, lowerCaseNameEmail, errHandler, validateEmailField, validateStringField, validateUniqueCodeName} from '../utils/index'
 import { BAD_REQUEST, OK, NO_CONTENT } from 'http-status-codes';
 
@@ -158,6 +159,7 @@ const registerData = async (req, res) => {
 
     const teacherID = insertTeacherData[0].dataValues.id
 
+    //create relationship between Teachers and Students
     for(let i = 0; i < studentsEmail.length; i++){
       const insertStudentsData = await Student.findOrCreate({
         where:{
@@ -195,6 +197,7 @@ const registerData = async (req, res) => {
     const subjectID = insertSubjectData[0].dataValues.id
     const classID = insertClassData[0].dataValues.id
 
+    //create relationship between Teachers, Subjects and Classes
     const insertTeacherSubClass = await Teacher_Sub_Class.findOrCreate({
       where:{
         teacherId: teacherID,
@@ -202,6 +205,23 @@ const registerData = async (req, res) => {
         tclassId: classID,
       }
     })
+
+    //create relationship between Students and Classes
+    for(let i = 0; i < studentsEmail.length; i++){
+      const findStudent = await Student.findAll({
+        where:{ email: studentsEmail[i] }
+      })
+
+      const studentID = findStudent[0].dataValues.id
+      const insertStudentClass = await Student_Class.findOrCreate({
+        where:{
+          studentId: studentID,
+          tclassId: classID
+        }
+      })
+
+    }
+
 
     //Informs user that the record already exist in DB
     if(!insertTeacherSubClass[0]._options.isNewRecord){

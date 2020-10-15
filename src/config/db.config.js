@@ -16,6 +16,8 @@ db.tclass = require('../../database/models/tclass.model')(sequelize, Sequelize)
 
 db.teacher_sub_class = require('../../database/models/teacher_sub_class.model')(sequelize, Sequelize)
 
+db.student_class =  require('../../database/models/student_class.model')(sequelize, Sequelize)
+
 db.teacher.associate(db)
 db.student.associate(db)
 db.subject.associate(db)

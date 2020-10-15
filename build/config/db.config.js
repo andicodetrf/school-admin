@@ -15,6 +15,7 @@ db.teacher_student = require('../../database/models/teacher_student.model')(_dat
 db.subject = require('../../database/models/subject.model')(_database["default"], _sequelize["default"]);
 db.tclass = require('../../database/models/tclass.model')(_database["default"], _sequelize["default"]);
 db.teacher_sub_class = require('../../database/models/teacher_sub_class.model')(_database["default"], _sequelize["default"]);
+db.student_class = require('../../database/models/student_class.model')(_database["default"], _sequelize["default"]);
 db.teacher.associate(db);
 db.student.associate(db);
 db.subject.associate(db);

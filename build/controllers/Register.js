@@ -31,12 +31,13 @@ var Subject = db.subject;
 var TClass = db.tclass;
 var Teacher_Student = db.teacher_student;
 var Teacher_Sub_Class = db.teacher_sub_class;
+var Student_Class = db.student_class;
 
 var Register = _express["default"].Router();
 
 var registerData = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
-    var _req$body, teacherData, studentsData, subjectData, classData, _iterator, _step, _i, studentsName, studentsEmail, _iterator2, _step2, _i2, insertTeacherData, teacherID, i, insertStudentsData, studentID, insertTeacherStudents, insertSubjectData, insertClassData, subjectID, classID, insertTeacherSubClass;
+    var _req$body, teacherData, studentsData, subjectData, classData, _iterator, _step, _i2, studentsName, studentsEmail, _iterator2, _step2, _i3, insertTeacherData, teacherID, i, insertStudentsData, studentID, insertTeacherStudents, insertSubjectData, insertClassData, subjectID, classID, insertTeacherSubClass, _i, findStudent, _studentID, insertStudentClass;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
@@ -125,9 +126,9 @@ var registerData = /*#__PURE__*/function () {
               break;
             }
 
-            _i = _step.value;
+            _i2 = _step.value;
 
-            if (_i.name) {
+            if (_i2.name) {
               _context.next = 22;
               break;
             }
@@ -138,7 +139,7 @@ var registerData = /*#__PURE__*/function () {
             }));
 
           case 22:
-            if (_i.email) {
+            if (_i2.email) {
               _context.next = 24;
               break;
             }
@@ -149,7 +150,7 @@ var registerData = /*#__PURE__*/function () {
             }));
 
           case 24:
-            if ((0, _index.validateStringField)(_i.name)) {
+            if ((0, _index.validateStringField)(_i2.name)) {
               _context.next = 26;
               break;
             }
@@ -160,7 +161,7 @@ var registerData = /*#__PURE__*/function () {
             }));
 
           case 26:
-            if ((0, _index.validateEmailField)(_i.email)) {
+            if ((0, _index.validateEmailField)(_i2.email)) {
               _context.next = 28;
               break;
             }
@@ -223,9 +224,9 @@ var registerData = /*#__PURE__*/function () {
 
             try {
               for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-                _i2 = _step2.value;
-                studentsName.push(_i2.name.toLowerCase());
-                studentsEmail.push(_i2.email.toLowerCase());
+                _i3 = _step2.value;
+                studentsName.push(_i3.name.toLowerCase());
+                studentsEmail.push(_i3.email.toLowerCase());
               } //capitalize subject and class names, uppercase subject & class codes
 
             } catch (err) {
@@ -251,7 +252,8 @@ var registerData = /*#__PURE__*/function () {
 
           case 52:
             insertTeacherData = _context.sent;
-            teacherID = insertTeacherData[0].dataValues.id;
+            teacherID = insertTeacherData[0].dataValues.id; //create relationship between Teachers and Students
+
             i = 0;
 
           case 55:
@@ -315,7 +317,8 @@ var registerData = /*#__PURE__*/function () {
           case 71:
             insertClassData = _context.sent;
             subjectID = insertSubjectData[0].dataValues.id;
-            classID = insertClassData[0].dataValues.id;
+            classID = insertClassData[0].dataValues.id; //create relationship between Teachers, Subjects and Classes
+
             _context.next = 76;
             return Teacher_Sub_Class.findOrCreate({
               where: {
@@ -327,9 +330,43 @@ var registerData = /*#__PURE__*/function () {
 
           case 76:
             insertTeacherSubClass = _context.sent;
+            _i = 0;
 
+          case 78:
+            if (!(_i < studentsEmail.length)) {
+              _context.next = 89;
+              break;
+            }
+
+            _context.next = 81;
+            return Student.findAll({
+              where: {
+                email: studentsEmail[_i]
+              }
+            });
+
+          case 81:
+            findStudent = _context.sent;
+            _studentID = findStudent[0].dataValues.id;
+            _context.next = 85;
+            return Student_Class.findOrCreate({
+              where: {
+                studentId: _studentID,
+                tclassId: classID
+              }
+            });
+
+          case 85:
+            insertStudentClass = _context.sent;
+
+          case 86:
+            _i++;
+            _context.next = 78;
+            break;
+
+          case 89:
             if (insertTeacherSubClass[0]._options.isNewRecord) {
-              _context.next = 79;
+              _context.next = 91;
               break;
             }
 
@@ -338,20 +375,20 @@ var registerData = /*#__PURE__*/function () {
               message: 'Record is already in the system'
             }));
 
-          case 79:
+          case 91:
             return _context.abrupt("return", res.sendStatus(_httpStatusCodes.NO_CONTENT));
 
-          case 82:
-            _context.prev = 82;
+          case 94:
+            _context.prev = 94;
             _context.t2 = _context["catch"](49);
             (0, _index.errHandler)(_context.t2);
 
-          case 85:
+          case 97:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[16, 32, 35, 38], [49, 82]]);
+    }, _callee, null, [[16, 32, 35, 38], [49, 94]]);
   }));
 
   return function registerData(_x, _x2) {

@@ -22,6 +22,13 @@ module.exports = (sequelize, Sequelize) => {
       foreignKey: 'studentId',
       onDelete: 'CASCADE'
     })
+
+    student.belongsToMany(models.tclass, {
+      through: 'students_classes',
+      as: 'tclass',
+      foreignKey: 'studentId',
+      onDelete: 'CASCADE'
+    })
   }
 
   return student;

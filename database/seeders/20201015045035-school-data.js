@@ -5,13 +5,13 @@ module.exports = {
     //----TEACHERS
     await queryInterface.bulkInsert('teachers', [
       {
-        name: 'Mr. PeterSd',
+        name: 'mr. petersd',
         email: 'petersd@gmail.com',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        name: 'Mr. SmithSd',
+        name: 'mr. smithsd',
         email: 'smithsd@gmail.com',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -28,13 +28,13 @@ module.exports = {
     //----STUDENTS
     await queryInterface.bulkInsert('students', [
       {
-        name: 'Student1 SD',
+        name: 'student1 sd',
         email: 'student1sd@gmail.com',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        name: 'Student2 SD',
+        name: 'student2 sd',
         email: 'student2sd@gmail.com',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -115,6 +115,18 @@ module.exports = {
 
     ], {});
 
+
+    //----STUDENTS & CLASSES JOIN TABLE
+    return await queryInterface.bulkInsert('students_classes', [
+      {studentId: student1ID, tclassId: classP1Int, createdAt: new Date(), updatedAt: new Date()},
+      {studentId: student2ID, tclassId: classP1Int, createdAt: new Date(), updatedAt: new Date()},
+      {studentId: student1ID, tclassId: classP2Int, createdAt: new Date(), updatedAt: new Date()},
+      {studentId: student2ID, tclassId: classP2Int, createdAt: new Date(), updatedAt: new Date()},
+
+    ], {});
+
+
+
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -124,5 +136,6 @@ module.exports = {
     await queryInterface.bulkDelete('subjects', null, {});
     await queryInterface.bulkDelete('tclasses', null, {});
     await queryInterface.bulkDelete('teachers_subs_classes', null, {});
+    await queryInterface.bulkDelete('students_classes', null, {});
   }
 };
