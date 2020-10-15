@@ -8,10 +8,7 @@ This API tool is inspired by the following User Stories which allows the School 
 >
 > As an Administrator, I should be able to generate a report on a Teacher’s workload, so that I use it for planning.
 
-<br>
-
 ## Development
-
 #### Language
 The application is written in Javascript.
 
@@ -24,14 +21,11 @@ The application is written in Javascript.
 - **Unit-Testing**: Jest
 - **Logger**: Winstonjs
 
-<br>
-
 ## Features
 - Register Teacher with his/her students in a particular class for a particular subject.
 - Update any registered Teacher's, Student's, Class' or Subject's information.
 - Generate a report of all registered Teachers with their subjects taken and the number of classes taught for each subject.
 
-<br>
 
 ## Application Set-Up
 #### Prerequisites
@@ -123,7 +117,6 @@ The Database Schema Design is based on the following assumptions:
 
 <img src="./schadmin_erd.png">
 
-<br>
 
 ## API Routes:
 
@@ -296,14 +289,12 @@ Generates in JSON format the list of registered teachers, their subjects taken a
     }
 }
 ```
-<br>
 
 ## Unit Testing (In Progress)
 
 <!-- ```
 npm test
 ``` -->
-<br>
 
 ## Contributor
 
