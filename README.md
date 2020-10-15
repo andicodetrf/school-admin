@@ -2,11 +2,15 @@
 
 This API tool is inspired by the following User Stories which allows the School Administrator to carry out administrative tasks such as registration of teachers, students, classes and subjects, update of categorical information and the generation of report on all registered Teachers' workload.
 
+<br>
+
 ## User Stories
 
 > As an Administrator, I want to register Teachers, Students, Classes and Subject in a single API, so that I can use the system for administrative purposes.
 >
 > As an Administrator, I should be able to generate a report on a Teacher’s workload, so that I use it for planning.
+
+<br>
 
 ## Development
 
@@ -27,8 +31,9 @@ The application is written in Javascript.
 - Update any registered Teacher's, Student's, Class' or Subject's information.
 - Generate a report of all registered Teachers with their subjects taken and the number of classes taught for each subject.
 
-## Application Set-Up
+<br>
 
+## Application Set-Up
 #### Prerequisites
 
 Prior to cloning, kindly ensure the following are present in your local machine.
@@ -37,6 +42,8 @@ Prior to cloning, kindly ensure the following are present in your local machine.
 3. [Docker](https://www.docker.com/get-started)
 4. [Node.js 12.xx](https://nodejs.org/en/download/)
 5. [Postman](https://www.postman.com/downloads/)
+
+<br>
 
 #### Installation
 
@@ -49,6 +56,7 @@ git clone https://github.com/andicodetrf/school-admin.git
 ```
 npm install
 ```
+<br>
 
 #### Exposed Port
 
@@ -57,29 +65,32 @@ npm install
 | 1   | database    | 33306        |
 | 2   | application | 3000         |
 
+<br>
 
 #### Database Connection
 1. Create a .env file in the same directory as the .env.sample file
 2. Copy the contents of .env.sample file into your created .env file
 3. Replace the mysql password *'yourmysqlpassword'* in the following files with your local machine's mysql root user's *password*
 
+Files to configure:
 ```
-`/.env`
-`/docker-compose.yml`
-`/config/config.js`
-`/src/config/database.js`
+/.env
+/docker-compose.yml
+/config/config.js
+/src/config/database.js
 ```
 
-3. In MySQL Workbench, create a new connection with the following details
+4. In MySQL Workbench, create a new connection with the following details
   - Hostname: 127.0.0.1
   - Port: 33306
   - Username: root
 
+<br>
 
 #### Initialize Database
 1. Run the following to create a Docker container for the MySQL Database
-  - Running this command for the first time sets up the container for the database in your local machine
-  - Subsequent executions of this command will only start the server
+  - *Running this command for the first time sets up the container for the database in your local machine*
+  - *Subsequent executions of this command will only start the server*
 ```
 npm start
 ```
@@ -88,6 +99,7 @@ npm start
 2020-10-15 11:13:36     [database.js]   INFO    Executing (default): SELECT 1+1 AS result
 2020-10-15 11:13:36     [server.js]     INFO    Application started at http://localhost:3000
 ```
+<br>
 
 #### Migration & Seeding
 1. If the server is running, stop the server and run the following to create the Database Schema
@@ -99,6 +111,8 @@ sequelize db:migrate
 sequelize db:seed:all
 ```
 
+<br>
+
 #### Database Entity Relationship Diagram
 
 The Database Schema Design is based on the following assumptions:
@@ -109,6 +123,7 @@ The Database Schema Design is based on the following assumptions:
 
 <img src="./schadmin_erd.png">
 
+<br>
 
 ## API Routes:
 
@@ -133,7 +148,7 @@ http://localhost:3000[URL Endpoint]
 
 <br>
 
-#### 1. Register Teacher with Students, Subject and Class
+### 1. Register Teacher with Students, Subject and Class
 
 Registers Teacher and his/her students for a particular subject in a particular class
 
@@ -172,14 +187,14 @@ Status Code: **204**
 
 <br>
 
-#### 2. Update registered Teacher's, Student's, Subject's or Class' Information
+### 2. Update registered Teacher's, Student's, Subject's or Class' Information
 
-Updates either Teacher's, Student's, Subject's or Class' information with one request at a time using the following registered data:
+Updates either Teacher's, Student's, Subject's or Class' information with one request at a time using the following registered unique fields:
 
-Teacher: Existing email
-Student: Existing email
-Subject: Existing subject code
-Class: Existing class code
+- Teacher: Existing email
+- Student: Existing email
+- Subject: Existing subject code
+- Class: Existing class code
 
 **Request Body Examples:**
 
@@ -232,12 +247,26 @@ Class: Existing class code
     "message": "Person details updated"
 }
 ```
+*Response for Subject update:*
+```
+{
+    "status": 200,
+    "message": "Subject details updated"
+}
+```
+*Response for Class update:*
+```
+{
+    "status": 200,
+    "message": "Class details updated"
+}
+```
 
 <br>
 
-#### 3. Generate report on all registered Teachers and their workload
+### 3. Generate report on all registered Teachers and their workload
 
-Generates data in JSON format on the list of registered teachers, their subjects taken and the number of classes for each subject taken.
+Generates in JSON format the list of registered teachers, their subjects taken and the number of classes taught for each subject.
 
 **Response Body Example:**
 
@@ -267,13 +296,14 @@ Generates data in JSON format on the list of registered teachers, their subjects
     }
 }
 ```
+<br>
 
 ## Unit Testing (In Progress)
 
 <!-- ```
 npm test
 ``` -->
-
+<br>
 
 ## Contributor
 
