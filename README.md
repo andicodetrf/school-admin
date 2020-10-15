@@ -118,7 +118,7 @@ The Database Schema Design is based on the following assumptions:
 <img src="./schadmin_erd.png">
 
 
-## API Routes:
+## API Routes
 
 ### Summary
 Postman is used for performing the following API interactions.
@@ -174,7 +174,7 @@ Registers Teacher and his/her students for a particular subject in a particular 
 }
 ```
 
-**Response Example**
+**Response Example:**
 
 Status Code: **204**
 
@@ -233,6 +233,8 @@ Updates either Teacher's, Student's, Subject's or Class' information with one re
 ```
 
 **Response Body Example:**
+<br>
+
 *Response for Teacher or Student update:*
 ```
 {
