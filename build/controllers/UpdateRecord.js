@@ -47,7 +47,7 @@ var updateData = /*#__PURE__*/function () {
             }));
 
           case 3:
-            //---- VALIDATE REQUEST BODY INPUT FUNCTIONS
+            //---- VALIDATE FUNCTIONS FOR REQUEST BODY INPUT
             checkPersonForm = function checkPersonForm(person) {
               if (!person.email || !person.updateName || !person.updateEmail) {
                 return res.status(_httpStatusCodes.BAD_REQUEST).json({
@@ -107,7 +107,7 @@ var updateData = /*#__PURE__*/function () {
               }
 
               return 'toUpdate';
-            }; //---- UPDATE DATA FUNCTIONS
+            }; //---- FUNCTIONS FOR CATEGORICAL UPDATE (PERSON, SUBJECT, CLASS)
 
 
             updatePersonData = /*#__PURE__*/function () {

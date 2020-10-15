@@ -12,12 +12,12 @@ export const convertCsvToJson = (filePath) => {
   });
 }
 
-//errHandler
+//error message log
 export const errHandler = (err) => {
   console.error('ERROR ---> : ', err)
 }
 
-//validate alphabets-only for name input
+//validate alphanumeric including symbols such as . - ' for name input
 export const validateStringField = (str) => {
   const reg = /^(?![ .]+$)[a-zA-Z0-9\-' .]*$/
   return reg.test(str)
@@ -30,7 +30,7 @@ export const validateEmailField = (eml) => {
 }
 
 
-//unique code & names
+//unique code & names for subject and classes
 export const validateUniqueCodeName = (obj) => {
   const arr = Object.values(obj).map(item => item.toLowerCase())
   for(let i = 0; i < arr.length; i++){

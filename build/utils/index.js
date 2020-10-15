@@ -27,14 +27,14 @@ var convertCsvToJson = function convertCsvToJson(filePath) {
       return reject(err);
     });
   });
-}; //errHandler
+}; //error message log
 
 
 exports.convertCsvToJson = convertCsvToJson;
 
 var errHandler = function errHandler(err) {
   console.error('ERROR ---> : ', err);
-}; //validate alphabets-only for name input
+}; //validate alphanumeric including symbols such as . - ' for name input
 
 
 exports.errHandler = errHandler;
@@ -50,7 +50,7 @@ exports.validateStringField = validateStringField;
 var validateEmailField = function validateEmailField(eml) {
   var reg = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
   return reg.test(eml);
-}; //unique code & names
+}; //unique code & names for subject and classes
 
 
 exports.validateEmailField = validateEmailField;

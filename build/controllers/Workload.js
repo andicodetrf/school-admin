@@ -50,7 +50,8 @@ var generateReport = /*#__PURE__*/function () {
             });
             teachersNameArr = teachers.map(function (t) {
               return t.name;
-            });
+            }); // for each teacher in the array, find teacher's Subject and Class via teacher's id. Push found data into new array.
+
             teachersData = [];
             _iterator = _createForOfIteratorHelper(teachersIDArr);
             _context.prev = 8;
@@ -110,7 +111,7 @@ var generateReport = /*#__PURE__*/function () {
             return _context.finish(23);
 
           case 26:
-            report = {};
+            report = {}; //loop through teachersData to retrieve each teacher's subject(s) and their associated class. create key-value properties for the subjects and number of classes into a single value assigned to teacher's name (key) in the report object.
 
             for (h = 0; h < teachersData.length; h++) {
               subjectsTaken = [];

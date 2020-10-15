@@ -26,7 +26,7 @@ const updateData = async (req, res) => {
       message: 'Kindly update only Teacher, Student, Subject or Class information at one time'})
   }
 
-  //---- VALIDATE REQUEST BODY INPUT FUNCTIONS
+  //---- VALIDATE FUNCTIONS FOR REQUEST BODY INPUT
   const checkPersonForm = (person) => {
     if(!person.email || !person.updateName || !person.updateEmail ){
       return res.status(BAD_REQUEST).json({
@@ -86,7 +86,7 @@ const updateData = async (req, res) => {
     return 'toUpdate'
   }
 
-//---- UPDATE DATA FUNCTIONS
+//---- FUNCTIONS FOR CATEGORICAL UPDATE (PERSON, SUBJECT, CLASS)
   const updatePersonData = async (person, model) => {
     const updatePersonDetails = await model.update(
       { name: person.updateName,
