@@ -339,10 +339,7 @@ var registerData = /*#__PURE__*/function () {
             }));
 
           case 79:
-            return _context.abrupt("return", res.status(_httpStatusCodes.CREATED).json({
-              status: _httpStatusCodes.CREATED,
-              message: 'Created'
-            }));
+            return _context.abrupt("return", res.sendStatus(_httpStatusCodes.NO_CONTENT));
 
           case 82:
             _context.prev = 82;

@@ -129,10 +129,9 @@ var updateData = /*#__PURE__*/function () {
 
                       case 2:
                         updatePersonDetails = _context.sent;
-                        console.log('UP_PERSON_DETAILS', updatePersonDetails);
 
                         if (!updatePersonDetails[0]) {
-                          _context.next = 8;
+                          _context.next = 7;
                           break;
                         }
 
@@ -141,13 +140,13 @@ var updateData = /*#__PURE__*/function () {
                           message: 'Person details updated'
                         }));
 
-                      case 8:
+                      case 7:
                         return _context.abrupt("return", res.status(_httpStatusCodes.NOT_FOUND).json({
                           status: _httpStatusCodes.NOT_FOUND,
                           message: 'Email not found. Kindly register'
                         }));
 
-                      case 9:
+                      case 8:
                       case "end":
                         return _context.stop();
                     }
@@ -179,10 +178,9 @@ var updateData = /*#__PURE__*/function () {
 
                       case 2:
                         updateSubjectDetails = _context2.sent;
-                        console.log('UP_SUB_DETAILS', updateSubjectDetails);
 
                         if (!updateSubjectDetails[0]) {
-                          _context2.next = 8;
+                          _context2.next = 7;
                           break;
                         }
 
@@ -191,13 +189,13 @@ var updateData = /*#__PURE__*/function () {
                           message: 'Subject details updated'
                         }));
 
-                      case 8:
+                      case 7:
                         return _context2.abrupt("return", res.status(_httpStatusCodes.NOT_FOUND).json({
                           status: _httpStatusCodes.NOT_FOUND,
                           message: 'Subject Code Not Found. Kindly register'
                         }));
 
-                      case 9:
+                      case 8:
                       case "end":
                         return _context2.stop();
                     }
@@ -229,10 +227,9 @@ var updateData = /*#__PURE__*/function () {
 
                       case 2:
                         updateClassDetails = _context3.sent;
-                        console.log('UP_CLASS_DETAILS', updateClassDetails);
 
                         if (!updateClassDetails[0]) {
-                          _context3.next = 8;
+                          _context3.next = 7;
                           break;
                         }
 
@@ -241,13 +238,13 @@ var updateData = /*#__PURE__*/function () {
                           message: 'Class details updated'
                         }));
 
-                      case 8:
+                      case 7:
                         return _context3.abrupt("return", res.status(_httpStatusCodes.NOT_FOUND).json({
                           status: _httpStatusCodes.NOT_FOUND,
                           message: 'Class Code Not Found. Kindly register'
                         }));
 
-                      case 9:
+                      case 8:
                       case "end":
                         return _context3.stop();
                     }

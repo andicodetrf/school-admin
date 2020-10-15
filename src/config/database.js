@@ -7,7 +7,7 @@ const {
   DB_PORT = '33306',
   DB_SCHEMA = 'school-administration-system',
   DB_USER = 'root',
-  DB_PW = 'password',
+  DB_PW = 'yourmysqlpassword',
   DB_POOL_ACQUIRE = '30000',
   DB_POOL_IDLE = '10000',
   DB_POOL_MAX_CONN = '10',
