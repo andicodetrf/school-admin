@@ -2,8 +2,6 @@
 
 This API tool is inspired by the following User Stories which allows the School Administrator to carry out administrative tasks such as registration of teachers, students, classes and subjects, update of categorical information and the generation of report on all registered Teachers' workload.
 
-<br>
-
 ## User Stories
 
 > As an Administrator, I want to register Teachers, Students, Classes and Subject in a single API, so that I can use the system for administrative purposes.
@@ -25,6 +23,8 @@ The application is written in Javascript.
 - **Object-relational Mapping**: Sequelize
 - **Unit-Testing**: Jest
 - **Logger**: Winstonjs
+
+<br>
 
 ## Features
 - Register Teacher with his/her students in a particular class for a particular subject.
