@@ -1,6 +1,12 @@
 ## School Administration System API
 
-This API tool that allows the School Administrator to carry out administrative tasks such as registration of teachers, students, classes and subjects, update of categorical information and the generation of report on all registered Teachers' workload.
+This API tool is inspired by the following User Stories which allows the School Administrator to carry out administrative tasks such as registration of teachers, students, classes and subjects, update of categorical information and the generation of report on all registered Teachers' workload.
+
+## User Stories
+
+> As an Administrator, I want to register Teachers, Students, Classes and Subject in a single API, so that I can use the system for administrative purposes.
+>
+> As an Administrator, I should be able to generate a report on a Teacher’s workload, so that I use it for planning.
 
 ## Development
 
@@ -8,20 +14,20 @@ This API tool that allows the School Administrator to carry out administrative t
 The application is written in Javascript.
 
 #### Tech Stack
-- Environment: Node.js, Docker
-- Web Application Framework: Express.js
-- Database: MySQL 8.0, mysql2 module
-- Object-relational Mapping: Sequelize
-- Unit-Testing: Jest
-- Logger: Winstonjs
-- API Access & Interaction: Postman
+- **Environment**: Node.js, Docker
+- **Web Application Framework**: Express.js
+- **Database**: MySQL 8.0, mysql2 module, MySQL Workbench(GUI)
+- **API Interaction**: Postman
+- **Object-relational Mapping**: Sequelize
+- **Unit-Testing**: Jest
+- **Logger**: Winstonjs
 
-## Functionality
+## Features
 - Register Teacher with his/her students in a particular class for a particular subject.
 - Update any registered Teacher's, Student's, Class' or Subject's information.
 - Generate a report of all registered Teachers with their subjects taken and the number of classes taught for each subject.
 
-## Configuration
+## Application Set-Up
 
 #### Prerequisites
 
@@ -39,7 +45,7 @@ Prior to cloning, kindly ensure the following are present in your local machine.
 git clone https://github.com/andicodetrf/school-admin.git
 ```
 
-2. In the cloned directory, install all dependencies my running the following
+2. In the cloned directory, install all dependencies by running the following
 ```
 npm install
 ```
@@ -53,8 +59,9 @@ npm install
 
 
 #### Database Connection
-1. Create a .env file in the same directory as the .env.sample file, copy the contents of .env.sample file into your .env file.
-2. Change the mysql password 'yourmysqlpassword' in the following files to your local machine's mysql root user's **password**
+1. Create a .env file in the same directory as the .env.sample file
+2. Copy the contents of .env.sample file into your created .env file
+3. Replace the mysql password *'yourmysqlpassword'* in the following files with your local machine's mysql root user's *password*
 
 ```
 `/.env`
@@ -69,8 +76,10 @@ npm install
   - Username: root
 
 
-#### Initialise Database
-1. Run the following to create a Docker container with MySQL database
+#### Initialize Database
+1. Run the following to create a Docker container for the MySQL Database
+  - Running this command for the first time sets up the container for the database in your local machine
+  - Subsequent executions of this command will only start the server
 ```
 npm start
 ```
@@ -80,7 +89,7 @@ npm start
 2020-10-15 11:13:36     [server.js]     INFO    Application started at http://localhost:3000
 ```
 
-##### Migration & Seeding
+#### Migration & Seeding
 1. If the server is running, stop the server and run the following to create the Database Schema
 ```
 sequelize db:migrate
@@ -91,14 +100,26 @@ sequelize db:seed:all
 ```
 
 #### Database Entity Relationship Diagram
+
+The Database Schema Design is based on the following assumptions:
+1. A teacher can teach in multiple classes.
+2. A teacher can teach multiple subjects, regardless to the same or different class.
+3. 2 different teachers can teach the same subject in the same class.
+4. A student can be in multiple classes.
+
 <img src="./schadmin_erd.png">
 
 
 ## API Routes:
+
+### Summary
 Postman is used for performing the following API interactions.
 
 **Host**: localhost
+<br>
+
 **Port**: 3000
+
 ```
 http://localhost:3000[URL Endpoint]
 ```
@@ -110,7 +131,9 @@ http://localhost:3000[URL Endpoint]
 | GET            | /api/reports/workload    | Generate report on all registered Teachers and their workload             |
 
 
-#### Register Teacher with Students, Subject and Class
+<br>
+
+#### 1. Register Teacher with Students, Subject and Class
 
 Registers Teacher and his/her students for a particular subject in a particular class
 
@@ -145,9 +168,11 @@ Registers Teacher and his/her students for a particular subject in a particular 
 
 **Response Example**
 
-Status Code **204**
+Status Code: **204**
 
-#### Update registered Teacher's, Student's, Subject's or Class' Information
+<br>
+
+#### 2. Update registered Teacher's, Student's, Subject's or Class' Information
 
 Updates either Teacher's, Student's, Subject's or Class' information with one request at a time using the following registered data:
 
@@ -208,7 +233,9 @@ Class: Existing class code
 }
 ```
 
-#### Generate report on all registered Teachers and their workload
+<br>
+
+#### 3. Generate report on all registered Teachers and their workload
 
 Generates data in JSON format on the list of registered teachers, their subjects taken and the number of classes for each subject taken.
 
@@ -241,7 +268,7 @@ Generates data in JSON format on the list of registered teachers, their subjects
 }
 ```
 
-#### Unit Testing (In Progress)
+## Unit Testing (In Progress)
 
 <!-- ```
 npm test
@@ -250,4 +277,4 @@ npm test
 
 ## Contributor
 
-1. Andrea Lau : andrea_lau92@hotmail.com
+1. Andrea Lau : [andrea_lau92@hotmail.com](mailto:andrea_lau92@hotmail.com)
