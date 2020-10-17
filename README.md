@@ -292,11 +292,13 @@ Generates in JSON format the list of registered teachers, their subjects taken a
 }
 ```
 
-## Unit Testing (In Progress)
-
-```bash
+## Unit Testing
+Run the following command for unit-testing
+```
 npm test
 ```
+Current Unit-Testing includes:
+- unit tests on validation and utility functions defined in src/utils/index.js
 
 ## Contributor
 
