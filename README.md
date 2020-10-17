@@ -294,9 +294,9 @@ Generates in JSON format the list of registered teachers, their subjects taken a
 
 ## Unit Testing (In Progress)
 
-<!-- ```
+```bash
 npm test
-``` -->
+```
 
 ## Contributor
 
