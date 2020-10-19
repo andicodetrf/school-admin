@@ -7,24 +7,6 @@ import { errHandler } from '../utils/index'
 
 const HealthcheckController = Express.Router();
 
-// const healthcheckHandler = async (req, res) => {
-//   try{
-
-//     let foundTeachers = await Teacher.findAll()
-//     if(foundTeachers){
-//       // console.log(foundTeachers)
-//       return res.status(OK).json({
-//         status: OK,
-//         foundTeachers
-//       })
-//     }
-//   } catch (err){
-//     errHandler(err)
-//   }
-
-// }
-
-
 const healthcheckHandler = async (req, res) => {
   try{
     return res.status(OK).json({

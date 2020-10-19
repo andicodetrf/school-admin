@@ -23,6 +23,9 @@ db.student.associate(db)
 db.subject.associate(db)
 db.tclass.associate(db)
 
-// console.log(db)
+// console.log(db.sequelize.models)
+// for(let i in db.sequelize.models){
+//     console.log(db.sequelize.models[i])
+// }
 
 module.exports = db;

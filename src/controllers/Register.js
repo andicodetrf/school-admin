@@ -23,6 +23,14 @@ const registerData = async (req, res) => {
 
   // ------- INPUT/REQ BODY VALIDATION --------
   switch(true) {
+
+  //added after unit-testing
+  case !teacherData:
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Teacher input not found. Require teacher with name and email`
+    })
+
   case !teacherData.name:
     return res.status(BAD_REQUEST).json({
       status: BAD_REQUEST,
@@ -43,6 +51,13 @@ const registerData = async (req, res) => {
       message: `Require at least one student (name and email) for registration`
     })
 
+  //added after unit-testing
+  case !subjectData:
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Subject input not found. Require subject with subjectCode and name`
+    })
+
   case !subjectData.subjectCode:
     return res.status(BAD_REQUEST).json({
       status: BAD_REQUEST,
@@ -55,6 +70,13 @@ const registerData = async (req, res) => {
       message: `Subject Name input not found`
     })
 
+  //added after unit-testing
+  case !classData:
+    return res.status(BAD_REQUEST).json({
+      status: BAD_REQUEST,
+      message: `Class input not found. Require class with classCode and name`
+    })
+
   case !classData.classCode:
     return res.status(BAD_REQUEST).json({
       status: BAD_REQUEST,
@@ -64,7 +86,7 @@ const registerData = async (req, res) => {
   case !classData.name:
     return res.status(BAD_REQUEST).json({
       status: BAD_REQUEST,
-      message: `Error 400: Class Name not found`
+      message: `Class Name not found`
     })
 
   }
@@ -170,7 +192,7 @@ const registerData = async (req, res) => {
 
       const studentID = insertStudentsData[0].dataValues.id
 
-      const insertTeacherStudents = await Teacher_Student.findOrCreate({
+      await Teacher_Student.findOrCreate({
         where:{
           teacherId: teacherID,
           studentId: studentID
@@ -213,7 +235,7 @@ const registerData = async (req, res) => {
       })
 
       const studentID = findStudent[0].dataValues.id
-      const insertStudentClass = await Student_Class.findOrCreate({
+      await Student_Class.findOrCreate({
         where:{
           studentId: studentID,
           tclassId: classID
