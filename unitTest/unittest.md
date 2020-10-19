@@ -16,17 +16,21 @@ Test scripts are located in *unitTest* directory
 <br> 
 
 ### Instructions to run tests
-1. Clear out all data in DB before Unit-Test
+1. Ensure the Docker mysql container is connected and running
+
+<br>
+
+2. Clear out all data in DB before Unit-Test
 ```
 sequelize db:seed:undo:all 
 ```
 
-2. Seed data in DB before Unit-Test
+3. Seed data in DB before Unit-Test
 ```
 sequelize db:seed:all
 ```
 
-3. Run the following command to execute all test scripts
+4. Run the following command to execute all test scripts
 ```
 npm test
 ```
