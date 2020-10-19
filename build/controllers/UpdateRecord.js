@@ -43,7 +43,7 @@ var updateData = /*#__PURE__*/function () {
 
             return _context4.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
               status: _httpStatusCodes.BAD_REQUEST,
-              message: 'Kindly update only Teacher, Student, Subject or Class information at one time'
+              message: 'Kindly update only Teacher, Student, Subject or Class information one at a time'
             }));
 
           case 3:

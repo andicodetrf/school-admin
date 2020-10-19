@@ -19,6 +19,9 @@ db.student_class = require('../../database/models/student_class.model')(_databas
 db.teacher.associate(db);
 db.student.associate(db);
 db.subject.associate(db);
-db.tclass.associate(db); // console.log(db)
+db.tclass.associate(db); // console.log(db.sequelize.models)
+// for(let i in db.sequelize.models){
+//     console.log(db.sequelize.models[i])
+// }
 
 module.exports = db;

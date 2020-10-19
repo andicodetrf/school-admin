@@ -23,7 +23,7 @@ const updateData = async (req, res) => {
   if(Object.keys(req.body).length !== 1){
     return res.status(BAD_REQUEST).json({
       status: BAD_REQUEST,
-      message: 'Kindly update only Teacher, Student, Subject or Class information at one time'})
+      message: 'Kindly update only Teacher, Student, Subject or Class information one at a time'})
   }
 
   //---- VALIDATE FUNCTIONS FOR REQUEST BODY INPUT

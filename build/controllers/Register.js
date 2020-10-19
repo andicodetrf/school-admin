@@ -37,7 +37,7 @@ var Register = _express["default"].Router();
 
 var registerData = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
-    var _req$body, teacherData, studentsData, subjectData, classData, _iterator, _step, _i2, studentsName, studentsEmail, _iterator2, _step2, _i3, insertTeacherData, teacherID, i, insertStudentsData, studentID, insertTeacherStudents, insertSubjectData, insertClassData, subjectID, classID, insertTeacherSubClass, _i, findStudent, _studentID, insertStudentClass;
+    var _req$body, teacherData, studentsData, subjectData, classData, _iterator, _step, _i2, studentsName, studentsEmail, _iterator2, _step2, _i3, insertTeacherData, teacherID, i, insertStudentsData, studentID, insertSubjectData, insertClassData, subjectID, classID, insertTeacherSubClass, _i, findStudent, _studentID;
 
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
@@ -46,54 +46,72 @@ var registerData = /*#__PURE__*/function () {
             _req$body = req.body, teacherData = _req$body.teacher, studentsData = _req$body.students, subjectData = _req$body.subject, classData = _req$body["class"]; // ------- INPUT/REQ BODY VALIDATION --------
 
             _context.t0 = true;
-            _context.next = _context.t0 === !teacherData.name ? 4 : _context.t0 === !teacherData.email ? 5 : _context.t0 === !studentsData ? 6 : _context.t0 === !studentsData.length ? 6 : _context.t0 === !Object.keys(studentsData).length ? 6 : _context.t0 === !subjectData.subjectCode ? 7 : _context.t0 === !subjectData.name ? 8 : _context.t0 === !classData.classCode ? 9 : _context.t0 === !classData.name ? 10 : 11;
+            _context.next = _context.t0 === !teacherData ? 4 : _context.t0 === !teacherData.name ? 5 : _context.t0 === !teacherData.email ? 6 : _context.t0 === !studentsData ? 7 : _context.t0 === !studentsData.length ? 7 : _context.t0 === !Object.keys(studentsData).length ? 7 : _context.t0 === !subjectData ? 8 : _context.t0 === !subjectData.subjectCode ? 9 : _context.t0 === !subjectData.name ? 10 : _context.t0 === !classData ? 11 : _context.t0 === !classData.classCode ? 12 : _context.t0 === !classData.name ? 13 : 14;
             break;
 
           case 4:
             return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
               status: _httpStatusCodes.BAD_REQUEST,
-              message: "Teacher's name input not found"
+              message: "Teacher input not found. Require teacher with name and email"
             }));
 
           case 5:
             return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
               status: _httpStatusCodes.BAD_REQUEST,
-              message: "Teacher's email input not found"
+              message: "Teacher's name input not found"
             }));
 
           case 6:
             return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
               status: _httpStatusCodes.BAD_REQUEST,
-              message: "Require at least one student (name and email) for registration"
+              message: "Teacher's email input not found"
             }));
 
           case 7:
             return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
               status: _httpStatusCodes.BAD_REQUEST,
-              message: "Subject Code input not found"
+              message: "Require at least one student (name and email) for registration"
             }));
 
           case 8:
             return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
               status: _httpStatusCodes.BAD_REQUEST,
-              message: "Subject Name input not found"
+              message: "Subject input not found. Require subject with subjectCode and name"
             }));
 
           case 9:
             return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
               status: _httpStatusCodes.BAD_REQUEST,
-              message: "Class Code input not found"
+              message: "Subject Code input not found"
             }));
 
           case 10:
             return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
               status: _httpStatusCodes.BAD_REQUEST,
-              message: "Error 400: Class Name not found"
+              message: "Subject Name input not found"
             }));
 
           case 11:
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Class input not found. Require class with classCode and name"
+            }));
+
+          case 12:
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Class Code input not found"
+            }));
+
+          case 13:
+            return _context.abrupt("return", res.status(_httpStatusCodes.BAD_REQUEST).json({
+              status: _httpStatusCodes.BAD_REQUEST,
+              message: "Class Name not found"
+            }));
+
+          case 14:
             if ((0, _index.validateStringField)(teacherData.name)) {
-              _context.next = 13;
+              _context.next = 16;
               break;
             }
 
@@ -102,9 +120,9 @@ var registerData = /*#__PURE__*/function () {
               message: "Teacher's name must be alphabet only"
             }));
 
-          case 13:
+          case 16:
             if ((0, _index.validateEmailField)(teacherData.email)) {
-              _context.next = 15;
+              _context.next = 18;
               break;
             }
 
@@ -113,23 +131,23 @@ var registerData = /*#__PURE__*/function () {
               message: "Teacher's email must be in email format"
             }));
 
-          case 15:
+          case 18:
             //Check if there is 'name' and 'email' in student. Validate name and email format
             _iterator = _createForOfIteratorHelper(studentsData);
-            _context.prev = 16;
+            _context.prev = 19;
 
             _iterator.s();
 
-          case 18:
+          case 21:
             if ((_step = _iterator.n()).done) {
-              _context.next = 30;
+              _context.next = 33;
               break;
             }
 
             _i2 = _step.value;
 
             if (_i2.name) {
-              _context.next = 22;
+              _context.next = 25;
               break;
             }
 
@@ -138,9 +156,9 @@ var registerData = /*#__PURE__*/function () {
               message: "Student's name input not found"
             }));
 
-          case 22:
+          case 25:
             if (_i2.email) {
-              _context.next = 24;
+              _context.next = 27;
               break;
             }
 
@@ -149,9 +167,9 @@ var registerData = /*#__PURE__*/function () {
               message: "Student's email input not found"
             }));
 
-          case 24:
+          case 27:
             if ((0, _index.validateStringField)(_i2.name)) {
-              _context.next = 26;
+              _context.next = 29;
               break;
             }
 
@@ -160,9 +178,9 @@ var registerData = /*#__PURE__*/function () {
               message: "Student's name must be alphabet only"
             }));
 
-          case 26:
+          case 29:
             if ((0, _index.validateEmailField)(_i2.email)) {
-              _context.next = 28;
+              _context.next = 31;
               break;
             }
 
@@ -171,30 +189,30 @@ var registerData = /*#__PURE__*/function () {
               message: "Student's email must be in email format"
             }));
 
-          case 28:
-            _context.next = 18;
+          case 31:
+            _context.next = 21;
             break;
 
-          case 30:
-            _context.next = 35;
+          case 33:
+            _context.next = 38;
             break;
-
-          case 32:
-            _context.prev = 32;
-            _context.t1 = _context["catch"](16);
-
-            _iterator.e(_context.t1);
 
           case 35:
             _context.prev = 35;
+            _context.t1 = _context["catch"](19);
+
+            _iterator.e(_context.t1);
+
+          case 38:
+            _context.prev = 38;
 
             _iterator.f();
 
-            return _context.finish(35);
+            return _context.finish(38);
 
-          case 38:
+          case 41:
             if ((0, _index.validateUniqueCodeName)(subjectData)) {
-              _context.next = 40;
+              _context.next = 43;
               break;
             }
 
@@ -203,9 +221,9 @@ var registerData = /*#__PURE__*/function () {
               message: "Subject Name and Subject Code cannot be the same"
             }));
 
-          case 40:
+          case 43:
             if ((0, _index.validateUniqueCodeName)(classData)) {
-              _context.next = 42;
+              _context.next = 45;
               break;
             }
 
@@ -214,7 +232,7 @@ var registerData = /*#__PURE__*/function () {
               message: "Class Name and Class Code cannot be the same"
             }));
 
-          case 42:
+          case 45:
             // ------- DATA CLEANING --------
             //lowercase names and emails for teacher & students
             (0, _index.lowerCaseNameEmail)(teacherData);
@@ -238,8 +256,8 @@ var registerData = /*#__PURE__*/function () {
             (0, _index.formatSubjectCode)(subjectData);
             (0, _index.formatClassCode)(classData); // ------- ACCESSING DB FOR DATA CREATION OR LOOKUP --------
 
-            _context.prev = 49;
-            _context.next = 52;
+            _context.prev = 52;
+            _context.next = 55;
             return Teacher.findOrCreate({
               where: {
                 email: teacherData.email
@@ -250,19 +268,19 @@ var registerData = /*#__PURE__*/function () {
 
             });
 
-          case 52:
+          case 55:
             insertTeacherData = _context.sent;
             teacherID = insertTeacherData[0].dataValues.id; //create relationship between Teachers and Students
 
             i = 0;
 
-          case 55:
+          case 58:
             if (!(i < studentsEmail.length)) {
-              _context.next = 66;
+              _context.next = 68;
               break;
             }
 
-            _context.next = 58;
+            _context.next = 61;
             return Student.findOrCreate({
               where: {
                 email: studentsEmail[i]
@@ -272,10 +290,10 @@ var registerData = /*#__PURE__*/function () {
               }
             });
 
-          case 58:
+          case 61:
             insertStudentsData = _context.sent;
             studentID = insertStudentsData[0].dataValues.id;
-            _context.next = 62;
+            _context.next = 65;
             return Teacher_Student.findOrCreate({
               where: {
                 teacherId: teacherID,
@@ -283,16 +301,13 @@ var registerData = /*#__PURE__*/function () {
               }
             });
 
-          case 62:
-            insertTeacherStudents = _context.sent;
-
-          case 63:
+          case 65:
             i++;
-            _context.next = 55;
+            _context.next = 58;
             break;
 
-          case 66:
-            _context.next = 68;
+          case 68:
+            _context.next = 70;
             return Subject.findOrCreate({
               where: {
                 subjectCode: subjectData.subjectCode
@@ -302,9 +317,9 @@ var registerData = /*#__PURE__*/function () {
               }
             });
 
-          case 68:
+          case 70:
             insertSubjectData = _context.sent;
-            _context.next = 71;
+            _context.next = 73;
             return TClass.findOrCreate({
               where: {
                 classCode: classData.classCode
@@ -314,12 +329,12 @@ var registerData = /*#__PURE__*/function () {
               }
             });
 
-          case 71:
+          case 73:
             insertClassData = _context.sent;
             subjectID = insertSubjectData[0].dataValues.id;
             classID = insertClassData[0].dataValues.id; //create relationship between Teachers, Subjects and Classes
 
-            _context.next = 76;
+            _context.next = 78;
             return Teacher_Sub_Class.findOrCreate({
               where: {
                 teacherId: teacherID,
@@ -328,27 +343,27 @@ var registerData = /*#__PURE__*/function () {
               }
             });
 
-          case 76:
+          case 78:
             insertTeacherSubClass = _context.sent;
             _i = 0;
 
-          case 78:
+          case 80:
             if (!(_i < studentsEmail.length)) {
-              _context.next = 89;
+              _context.next = 90;
               break;
             }
 
-            _context.next = 81;
+            _context.next = 83;
             return Student.findAll({
               where: {
                 email: studentsEmail[_i]
               }
             });
 
-          case 81:
+          case 83:
             findStudent = _context.sent;
             _studentID = findStudent[0].dataValues.id;
-            _context.next = 85;
+            _context.next = 87;
             return Student_Class.findOrCreate({
               where: {
                 studentId: _studentID,
@@ -356,17 +371,14 @@ var registerData = /*#__PURE__*/function () {
               }
             });
 
-          case 85:
-            insertStudentClass = _context.sent;
-
-          case 86:
+          case 87:
             _i++;
-            _context.next = 78;
+            _context.next = 80;
             break;
 
-          case 89:
+          case 90:
             if (insertTeacherSubClass[0]._options.isNewRecord) {
-              _context.next = 91;
+              _context.next = 92;
               break;
             }
 
@@ -375,20 +387,20 @@ var registerData = /*#__PURE__*/function () {
               message: 'Record is already in the system'
             }));
 
-          case 91:
+          case 92:
             return _context.abrupt("return", res.sendStatus(_httpStatusCodes.NO_CONTENT));
 
-          case 94:
-            _context.prev = 94;
-            _context.t2 = _context["catch"](49);
+          case 95:
+            _context.prev = 95;
+            _context.t2 = _context["catch"](52);
             (0, _index.errHandler)(_context.t2);
 
-          case 97:
+          case 98:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[16, 32, 35, 38], [49, 94]]);
+    }, _callee, null, [[19, 35, 38, 41], [52, 95]]);
   }));
 
   return function registerData(_x, _x2) {
