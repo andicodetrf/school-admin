@@ -1,4 +1,4 @@
-import app from '../../app' // Link to your server file
+import app from '../../../src/app'; //link to server file
 import supertest from 'supertest'
 const request = supertest(app)
 

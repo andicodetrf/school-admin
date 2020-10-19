@@ -19,21 +19,7 @@ var _index = require("../utils/index");
 
 // const db = require('../config/db.config');
 // const Teacher = db.teacher;
-var HealthcheckController = _express["default"].Router(); // const healthcheckHandler = async (req, res) => {
-//   try{
-//     let foundTeachers = await Teacher.findAll()
-//     if(foundTeachers){
-//       // console.log(foundTeachers)
-//       return res.status(OK).json({
-//         status: OK,
-//         foundTeachers
-//       })
-//     }
-//   } catch (err){
-//     errHandler(err)
-//   }
-// }
-
+var HealthcheckController = _express["default"].Router();
 
 var healthcheckHandler = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {

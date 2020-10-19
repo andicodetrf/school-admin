@@ -1,4 +1,4 @@
-import {validateStringField, validateEmailField, validateUniqueCodeName, capitalizeFirstChar, lowerCaseNameEmail, formatSubjectCode } from '../index'
+import {validateStringField, validateEmailField, validateUniqueCodeName, capitalizeFirstChar, lowerCaseNameEmail, formatSubjectCode } from '../../../src/utils/index'
 
 
 // ------ TEST VALIDATE NAME STRING FORMAT FUNCTION

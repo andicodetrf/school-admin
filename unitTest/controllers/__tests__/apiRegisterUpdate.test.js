@@ -1,7 +1,8 @@
-import app from '../../app'; 
+import app from '../../../src/app'; 
 import supertest from 'supertest';
 const request = supertest(app);
-const db = require('../../config/db.config');
+// const db = require('../../config/db.config');
+const db = require('../../../src/config/db.config');
 import Sequelize from 'sequelize'
 const Op = Sequelize.Op;
 
