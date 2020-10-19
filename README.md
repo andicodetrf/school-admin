@@ -1,5 +1,7 @@
 ## School Administration System API
 
+*Update: api-db-test branch is the most updated project repo*
+
 This API tool is inspired by the following User Stories which allows the School Administrator to carry out administrative tasks such as registration of teachers, students, classes and subjects, update of categorical information and the generation of report on all registered Teachers' workload.
 
 ## User Stories
@@ -117,6 +119,14 @@ The Database Schema Design is based on the following assumptions:
 
 <img src="./schadmin_erd.png">
 
+<br>
+
+## Unit Testing (Different Branch: api-db-test)
+
+Kindly click on the following to instructions for Unit-Testing:
+[Instructions on Unit-Testing](https://github.com/andicodetrf/school-admin/blob/api-db-test/unitTest/unittest.md)
+
+<br>
 
 ## API Routes
 
@@ -291,14 +301,6 @@ Generates in JSON format the list of registered teachers, their subjects taken a
     }
 }
 ```
-
-## Unit Testing
-Run the following command for unit-testing
-```
-npm test
-```
-Current Unit-Testing includes:
-- unit tests on validation and utility functions defined in src/utils/index.js
 
 ## Contributor
 
