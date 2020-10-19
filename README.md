@@ -123,7 +123,8 @@ The Database Schema Design is based on the following assumptions:
 
 ## Unit Testing (Different Branch: api-db-test)
 
-Kindly click on the following to instructions for Unit-Testing:
+Kindly click on the following for instructions on Unit-Testing:
+<br>
 [Instructions on Unit-Testing](https://github.com/andicodetrf/school-admin/blob/api-db-test/unitTest/unittest.md)
 
 <br>
