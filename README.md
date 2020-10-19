@@ -1,6 +1,6 @@
 ## School Administration System API
 
-*Update: api-db-test branch is the most updated project repo*
+***Update: api-db-test branch is the most updated project repo***
 
 This API tool is inspired by the following User Stories which allows the School Administrator to carry out administrative tasks such as registration of teachers, students, classes and subjects, update of categorical information and the generation of report on all registered Teachers' workload.
 
@@ -121,13 +121,13 @@ The Database Schema Design is based on the following assumptions:
 
 <br>
 
-## Unit Testing (Different Branch: api-db-test)
+## Unit Testing
 
 Kindly click on the following for instructions on Unit-Testing:
 <br>
+<br>
 [Instructions on Unit-Testing](https://github.com/andicodetrf/school-admin/blob/api-db-test/unitTest/unittest.md)
 
-<br>
 
 ## API Routes
 
