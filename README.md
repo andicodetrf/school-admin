@@ -20,7 +20,7 @@ The application is written in Javascript.
 - **Database**: MySQL 8.0, mysql2 module, MySQL Workbench(GUI)
 - **API Interaction**: Postman
 - **Object-relational Mapping**: Sequelize
-- **Unit-Testing**: Jest
+- **Unit-Testing**: Jest, Supertest
 - **Logger**: Winstonjs
 
 ## Features
@@ -48,7 +48,12 @@ Prior to cloning, kindly ensure the following are present in your local machine.
 git clone https://github.com/andicodetrf/school-admin.git
 ```
 
-2. In the cloned directory, install all dependencies by running the following
+2. Switch branch from master to api-db-test branch by running the following
+```
+git checkout api-db-test
+```
+
+3. Install all dependencies by running the following
 ```
 npm install
 ```
