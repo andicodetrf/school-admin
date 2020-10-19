@@ -118,6 +118,12 @@ The Database Schema Design is based on the following assumptions:
 <img src="./schadmin_erd.png">
 
 
+## Unit Testing (Different Branch: api-db-test)
+
+[Instructions on Unit-Testing](https://github.com/andicodetrf/school-admin/blob/api-db-test/unitTest/unittest.md)
+
+<br>
+
 ## API Routes
 
 ### Summary
@@ -291,14 +297,6 @@ Generates in JSON format the list of registered teachers, their subjects taken a
     }
 }
 ```
-
-## Unit Testing
-Run the following command for unit-testing
-```
-npm test
-```
-Current Unit-Testing includes:
-- unit tests on validation and utility functions defined in src/utils/index.js
 
 ## Contributor
 

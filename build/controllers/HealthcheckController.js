@@ -17,51 +17,32 @@ var _httpStatusCodes = require("http-status-codes");
 
 var _index = require("../utils/index");
 
-var db = require('../config/db.config');
-
-var Teacher = db.teacher;
-
+// const db = require('../config/db.config');
+// const Teacher = db.teacher;
 var HealthcheckController = _express["default"].Router();
 
 var healthcheckHandler = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
-    var foundTeachers;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            _context.next = 3;
-            return Teacher.findAll();
-
-          case 3:
-            foundTeachers = _context.sent;
-
-            if (!foundTeachers) {
-              _context.next = 6;
-              break;
-            }
-
             return _context.abrupt("return", res.status(_httpStatusCodes.OK).json({
-              status: _httpStatusCodes.OK,
-              foundTeachers: foundTeachers
+              status: _httpStatusCodes.OK
             }));
 
-          case 6:
-            _context.next = 11;
-            break;
-
-          case 8:
-            _context.prev = 8;
+          case 4:
+            _context.prev = 4;
             _context.t0 = _context["catch"](0);
             (0, _index.errHandler)(_context.t0);
 
-          case 11:
+          case 7:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 8]]);
+    }, _callee, null, [[0, 4]]);
   }));
 
   return function healthcheckHandler(_x, _x2) {

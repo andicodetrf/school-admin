@@ -40,7 +40,9 @@ var errHandler = function errHandler(err) {
 exports.errHandler = errHandler;
 
 var validateStringField = function validateStringField(str) {
-  var reg = /^(?![ .]+$)[a-zA-Z0-9\-' .]*$/;
+  // const reg = /^(?![ .]+$)[a-zA-Z0-9\-' .]*$/
+  var reg = /^[a-zA-Z][a-zA-Z0-9-' .]*$/; //improved ver after unit-testing to ensure name starts with alpha only
+
   return reg.test(str);
 }; //validate email format for email input
 
@@ -48,7 +50,9 @@ var validateStringField = function validateStringField(str) {
 exports.validateStringField = validateStringField;
 
 var validateEmailField = function validateEmailField(eml) {
-  var reg = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+  // const reg = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g
+  var reg = /^[a-zA-Z0-9]+[._-]*[a-zA-Z0-9]*@[a-zA-Z0-9]+\.[a-zA-Z0-9]{2,4}$/; //improved ver after unit-testing to ensure email starts with alphanumeric, alphanumeric after '@' and alphanumeric after '.'
+
   return reg.test(eml);
 }; //unique code & names for subject and classes
 
