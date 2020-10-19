@@ -1,6 +1,6 @@
 ## School Administration System API
 
-***[See Updated Repo complete with Unit Test:](https://github.com/andicodetrf/school-admin/tree/api-db-test)***
+***[Click here for Updated Repo complete with Unit Test](https://github.com/andicodetrf/school-admin/tree/api-db-test)***
 
 This API tool is inspired by the following User Stories which allows the School Administrator to carry out administrative tasks such as registration of teachers, students, classes and subjects, update of categorical information and the generation of report on all registered Teachers' workload.
 
